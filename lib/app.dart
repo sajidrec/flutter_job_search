@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:job_search/presentation/pages/splash_screen.dart';
+import 'package:job_search/presentation/screens/signup_or_login_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 
 class JobSearchApp extends StatelessWidget {
@@ -13,7 +13,7 @@ class JobSearchApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: _buildThemeData(),
-      home: SplashScreen(),
+      home: const SignupOrLoginScreen(),
     );
   }
 

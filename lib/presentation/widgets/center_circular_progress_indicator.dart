@@ -13,10 +13,12 @@ class CenterCircularProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircularProgressIndicator(
-      color: loaderColor,
-      backgroundColor: loaderBackgroundColor,
-      strokeWidth: loaderThickness,
+    return Center(
+      child: CircularProgressIndicator(
+        color: loaderColor,
+        backgroundColor: loaderBackgroundColor,
+        strokeWidth: loaderThickness,
+      ),
     );
   }
 }

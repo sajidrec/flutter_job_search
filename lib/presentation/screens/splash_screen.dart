@@ -1,11 +1,35 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:job_search/presentation/screens/signup_or_login_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../widgets/center_circular_progress_indicator.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Timer(
+      const Duration(seconds: 3),
+      () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SignupOrLoginScreen(),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +50,7 @@ class SplashScreen extends StatelessWidget {
   }
 
   Widget _buildLoader() {
-    return CenterCircularProgressIndicator(
+    return const CenterCircularProgressIndicator(
       loaderColor: AppColors.primaryShade,
       loaderBackgroundColor: AppColors.secondary,
       loaderThickness: 3.5,
@@ -38,7 +62,7 @@ class SplashScreen extends StatelessWidget {
       baseColor: AppColors.textWhite,
       highlightColor: AppColors.primaryShade,
       direction: ShimmerDirection.rtl,
-      period: Duration(seconds: 3),
+      period: const Duration(seconds: 3),
       child: Text(
         "Develop by Sajid",
         style: Theme.of(context).textTheme.headlineSmall,
@@ -50,7 +74,7 @@ class SplashScreen extends StatelessWidget {
     return Shimmer.fromColors(
       baseColor: AppColors.primaryShade,
       highlightColor: AppColors.secondary,
-      period: Duration(seconds: 2),
+      period: const Duration(seconds: 2),
       child: Text(
         "Job Search",
         style: Theme.of(context).textTheme.headlineLarge,
