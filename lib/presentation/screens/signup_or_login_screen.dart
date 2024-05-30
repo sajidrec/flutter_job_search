@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:job_search/presentation/screens/forget_password_email_enter_screen.dart';
+import 'package:job_search/presentation/screens/login_screen.dart';
+import 'package:job_search/presentation/screens/signup_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/assets_path.dart';
 
@@ -23,9 +26,11 @@ class SignupOrLoginScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 40),
                 ),
                 const SizedBox(height: 20),
-                _buildSignUpButton(),
+                _buildSignUpButton(context),
                 const SizedBox(height: 25),
-                _buildLoginButton()
+                _buildLoginButton(context),
+                const SizedBox(height: 15),
+                _buildForgetPasswordButton(context),
               ],
             ),
           ),
@@ -34,11 +39,39 @@ class SignupOrLoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton() {
+  Widget _buildForgetPasswordButton(BuildContext context) {
+    return TextButton(
+      style: ButtonStyle(
+        overlayColor: WidgetStateProperty.all(
+          AppColors.primaryShade,
+        ),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ForgetPasswordEmailEnterScreen(),
+          ),
+        );
+      },
+      child: const Text(
+        "Forget password?",
+        style: TextStyle(
+          color: AppColors.textWhite,
+          fontSize: 18,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoginButton(BuildContext context) {
     return SizedBox(
       width: double.maxFinite,
       child: OutlinedButton(
         style: ButtonStyle(
+          overlayColor: WidgetStateProperty.all(
+            AppColors.primaryShade,
+          ),
           padding: WidgetStateProperty.all(
             const EdgeInsets.all(16),
           ),
@@ -50,7 +83,14 @@ class SignupOrLoginScreen extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoginScreen(),
+            ),
+          );
+        },
         child: const Text(
           "Login",
           style: TextStyle(fontSize: 20),
@@ -59,7 +99,7 @@ class SignupOrLoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSignUpButton() {
+  Widget _buildSignUpButton(BuildContext context) {
     return SizedBox(
       width: double.maxFinite,
       child: FilledButton(
@@ -71,7 +111,14 @@ class SignupOrLoginScreen extends StatelessWidget {
             AppColors.secondary,
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SignupScreen(),
+            ),
+          );
+        },
         child: const Text(
           "Sign Up",
           style: TextStyle(fontSize: 20),
