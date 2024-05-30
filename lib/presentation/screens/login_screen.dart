@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
+import 'package:job_search/presentation/screens/forget_password_email_enter_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/assets_path.dart';
 import 'package:provider/provider.dart';
@@ -36,44 +37,53 @@ class _LoginScreenState extends State<LoginScreen> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: "Enter your email",
-                          suffixIcon: Icon(
-                            Icons.email_rounded,
-                            color: AppColors.secondary,
-                          ),
-                        ),
-                      ),
+                      _buildEmailInputBox(),
                       const SizedBox(height: 15),
-                      Consumer<PasswordObscureProvider>(
-                          builder: (context, value, child) {
-                        return TextFormField(
-                          obscureText: value.isObscure,
-                          decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                value.toggleObscure();
-                              },
-                              icon: Icon(
-                                (value.isObscure
-                                    ? Icons.visibility_off
-                                    : Icons.visibility),
-                                color: AppColors.secondary,
-                              ),
-                            ),
-                            hintText: "Enter your password",
-                          ),
-                        );
-                      }),
+                      _buildPasswordInputBox(),
                       const SizedBox(height: 35),
                       _buildLoginButton(context),
                     ],
                   ),
                 ),
+                const SizedBox(height: 15),
+                _buildForgetPasswordButton(context),
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Consumer<PasswordObscureProvider> _buildPasswordInputBox() {
+    return Consumer<PasswordObscureProvider>(builder: (context, value, child) {
+      return TextFormField(
+        obscureText: value.isObscure,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          suffixIcon: IconButton(
+            onPressed: () {
+              value.toggleObscure();
+            },
+            icon: Icon(
+              (value.isObscure ? Icons.visibility_off : Icons.visibility),
+              color: AppColors.secondary,
+            ),
+          ),
+          hintText: "Enter your password",
+        ),
+      );
+    });
+  }
+
+  Widget _buildEmailInputBox() {
+    return TextFormField(
+      keyboardType: TextInputType.emailAddress,
+      decoration: const InputDecoration(
+        hintText: "Enter your email",
+        suffixIcon: Icon(
+          Icons.email_rounded,
+          color: AppColors.secondary,
         ),
       ),
     );
@@ -105,14 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const LoginScreen(),
-            ),
-          );
-        },
+        onPressed: () {},
         child: const Text(
           "Login",
           style: TextStyle(fontSize: 20),
@@ -126,6 +129,31 @@ class _LoginScreenState extends State<LoginScreen> {
       child: SvgPicture.asset(
         AssetsPath.loginImage,
         fit: BoxFit.fill,
+      ),
+    );
+  }
+
+  Widget _buildForgetPasswordButton(BuildContext context) {
+    return TextButton(
+      style: ButtonStyle(
+        overlayColor: WidgetStateProperty.all(
+          AppColors.primaryShade,
+        ),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ForgetPasswordEmailEnterScreen(),
+          ),
+        );
+      },
+      child: const Text(
+        "Forget password?",
+        style: TextStyle(
+          color: AppColors.textWhite,
+          fontSize: 18,
+        ),
       ),
     );
   }
