@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,10 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
                 child: _buildHeaderSection(context),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 8),
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: _buildSearchBox(),
@@ -247,29 +251,53 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildHeaderSection(BuildContext context) {
-    return Row(
-      children: [
-        const CircleAvatar(
-          backgroundColor: AppColors.secondary,
-          minRadius: 35,
-        ),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Welcome",
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.white38,
+    return InkWell(
+      overlayColor: WidgetStateProperty.all(
+        AppColors.primaryShade.withOpacity(0.2),
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const UpdateProfileScreen(
+              fullName: "MD. Sajid Hossain",
+            ),
+          ),
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              const CircleAvatar(
+                backgroundColor: AppColors.secondary,
+                minRadius: 35,
+              ),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Welcome",
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: Colors.white38,
+                        ),
                   ),
-            ),
-            Text(
-              "Sajid Hossain",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ],
-        )
-      ],
+                  Text(
+                    "Sajid Hossain",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                ],
+              )
+            ],
+          ),
+          const Icon(
+            Icons.edit,
+            color: AppColors.textWhite,
+          )
+        ],
+      ),
     );
   }
 

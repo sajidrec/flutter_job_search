@@ -31,14 +31,16 @@ class JobSearchApp extends StatelessWidget {
       scaffoldBackgroundColor: AppColors.primary,
       textTheme: _buildTextTheme(),
       textSelectionTheme: const TextSelectionThemeData(
-        cursorColor: AppColors.textWhite,
-      ),
+          cursorColor: AppColors.textWhite,
+          selectionColor: AppColors.secondary,
+          selectionHandleColor: AppColors.secondary),
       inputDecorationTheme: _buildInputDecorationTheme(),
     );
   }
 
   InputDecorationTheme _buildInputDecorationTheme() {
     return InputDecorationTheme(
+      counterStyle: const TextStyle(color: AppColors.textWhite),
       hintStyle: TextStyle(color: Colors.grey.shade500),
       contentPadding: const EdgeInsets.symmetric(
         vertical: 14,
