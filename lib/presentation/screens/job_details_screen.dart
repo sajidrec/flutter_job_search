@@ -41,7 +41,7 @@ class JobDetailsScreen extends StatelessWidget {
                               "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitiaLorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ",
                           jobRequirements:
                               "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitiaLorem ipsum dolor sit amet consectetur adipisicing elit. Maxime",
-                        )
+                        ),
                       ],
                     ),
                   ),

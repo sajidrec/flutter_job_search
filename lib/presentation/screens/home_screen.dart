@@ -156,21 +156,97 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildSearchBox() {
     return Form(
       key: _formKey,
-      child: TextFormField(
-        textInputAction: TextInputAction.search,
-        controller: _searchTEController,
-        decoration: InputDecoration(
-          hintText: "Search",
-          suffixIcon: IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-              color: AppColors.textWhite,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextFormField(
+            textInputAction: TextInputAction.search,
+            controller: _searchTEController,
+            decoration: InputDecoration(
+              hintText: "Search",
+              suffixIcon: IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.search,
+                  color: AppColors.textWhite,
+                ),
+              ),
             ),
+            onFieldSubmitted: (value) {},
+          ),
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildRemoteOnlyDropdown(),
+              _buildJobPostTimeDropdown(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildJobPostTimeDropdown() {
+    return DropdownButton<String>(
+      dropdownColor: AppColors.primaryShade,
+      borderRadius: BorderRadius.circular(12),
+      iconEnabledColor: AppColors.textWhite,
+      value: "all",
+      items: const [
+        DropdownMenuItem(
+          value: "all",
+          child: Text("All"),
+        ),
+        DropdownMenuItem(
+          value: "today",
+          child: Text("Today"),
+        ),
+        DropdownMenuItem(
+          value: "3days",
+          child: Text("3 Days"),
+        ),
+        DropdownMenuItem(
+          value: "week",
+          child: Text("Week"),
+        ),
+        DropdownMenuItem(
+          value: "month",
+          child: Text("Month"),
+        ),
+      ],
+      onChanged: (value) {},
+    );
+  }
+
+  Widget _buildRemoteOnlyDropdown() {
+    return DropdownButton<bool>(
+      dropdownColor: AppColors.primaryShade,
+      iconEnabledColor: AppColors.textWhite,
+      icon: const Icon(Icons.arrow_drop_down_outlined),
+      hint: const Text(
+        "Job Type",
+        style: TextStyle(
+          color: AppColors.textWhite,
+        ),
+      ),
+      borderRadius: BorderRadius.circular(12),
+      value: false,
+      items: const [
+        DropdownMenuItem<bool>(
+          value: true,
+          child: Text(
+            "Remote Only",
+            style: TextStyle(),
           ),
         ),
-        onFieldSubmitted: (value) {},
-      ),
+        DropdownMenuItem(
+          value: false,
+          child: Text("Any Type"),
+        ),
+      ],
+      onChanged: (value) {},
     );
   }
 
