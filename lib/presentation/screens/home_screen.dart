@@ -1,7 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:job_search/presentation/screens/job_details_screen.dart';
 import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
+import 'package:job_search/presentation/widgets/job_card_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,126 +61,49 @@ class _HomeScreenState extends State<HomeScreen> {
               "Popular",
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            Text(
-              "View all",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+            TextButton(
+              style: ButtonStyle(
+                padding: WidgetStateProperty.all(
+                  EdgeInsets.zero,
+                ),
+                overlayColor: WidgetStateProperty.all(
+                  AppColors.primaryShade.withOpacity(0.2),
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                "View all",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            )
           ],
         ),
         const SizedBox(height: 14),
         ListView.separated(
           shrinkWrap: true,
           primary: false,
-          itemBuilder: (context, index) => _buildPopularCard(
+          itemBuilder: (context, index) => JobCardWidget(
             context: context,
             imageUrl:
                 'https://w7.pngwing.com/pngs/63/1016/png-transparent-google-logo-google-logo-g-suite-chrome-text-logo-chrome.png',
             jobTitle: 'UI/UX Designer',
             companyName: 'Google',
             datePosted: '20/12/2020',
+            onTapFunction: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const JobDetailsScreen(),
+                ),
+              );
+            },
           ),
           separatorBuilder: (context, index) => const SizedBox(
             height: 10,
           ),
-          itemCount: 3,
+          itemCount: 4,
         ),
       ],
-    );
-  }
-
-  Widget _buildPopularCard({
-    required BuildContext context,
-    required String imageUrl,
-    required String jobTitle,
-    required String companyName,
-    required String datePosted,
-  }) {
-    return Card(
-      elevation: 3,
-      color: AppColors.primaryShade,
-      child: InkWell(
-        onTap: () {},
-        overlayColor: WidgetStateProperty.all(
-          AppColors.primaryShade.withOpacity(0.2),
-        ),
-        borderRadius: BorderRadius.circular(8),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 12,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: CachedNetworkImage(
-                          fit: BoxFit.cover,
-                          imageUrl: imageUrl,
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 7,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              jobTitle,
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              companyName,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    color: Colors.white.withOpacity(0.85),
-                                  ),
-                            ),
-                            const SizedBox(height: 4),
-                            Text(
-                              datePosted,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .copyWith(
-                                    color: Colors.white70,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Expanded(
-                flex: 1,
-                child: FittedBox(
-                  child: Icon(
-                    Icons.arrow_right_alt_rounded,
-                    color: AppColors.textWhite,
-                    size: 50,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 
@@ -272,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const CircleAvatar(
                 backgroundColor: AppColors.secondary,
-                minRadius: 35,
+                minRadius: 40,
               ),
               const SizedBox(width: 10),
               Column(

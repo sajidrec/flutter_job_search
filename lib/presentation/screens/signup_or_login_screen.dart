@@ -50,7 +50,7 @@ class SignupOrLoginScreen extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ForgetPasswordEmailEnterScreen(),
+            builder: (context) => const ForgetPasswordEmailEnterScreen(),
           ),
         );
       },

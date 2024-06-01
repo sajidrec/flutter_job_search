@@ -31,10 +31,18 @@ class JobSearchApp extends StatelessWidget {
       scaffoldBackgroundColor: AppColors.primary,
       textTheme: _buildTextTheme(),
       textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: AppColors.textWhite,
-          selectionColor: AppColors.secondary,
-          selectionHandleColor: AppColors.secondary),
+        cursorColor: AppColors.textWhite,
+        selectionColor: AppColors.secondary,
+        selectionHandleColor: AppColors.secondary,
+      ),
       inputDecorationTheme: _buildInputDecorationTheme(),
+      iconButtonTheme: IconButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStateProperty.all(
+            AppColors.textWhite,
+          ),
+        ),
+      ),
     );
   }
 
