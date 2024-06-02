@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:job_search/presentation/screens/signup_or_login_screen.dart';
+import 'package:job_search/presentation/screens/auth_screens/signup_or_login_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:shimmer/shimmer.dart';
 

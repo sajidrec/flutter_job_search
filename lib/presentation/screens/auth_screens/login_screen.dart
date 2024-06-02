@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
-import 'package:job_search/presentation/screens/forget_password_email_enter_screen.dart';
+import 'package:job_search/presentation/screens/auth_screens/forget_password_email_enter_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/assets_path.dart';
 import 'package:provider/provider.dart';

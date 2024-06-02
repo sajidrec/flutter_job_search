@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:job_search/presentation/screens/forget_password_email_enter_screen.dart';
-import 'package:job_search/presentation/screens/login_screen.dart';
-import 'package:job_search/presentation/screens/signup_screen.dart';
+import 'package:job_search/presentation/screens/auth_screens/forget_password_email_enter_screen.dart';
+import 'package:job_search/presentation/screens/auth_screens/login_screen.dart';
+import 'package:job_search/presentation/screens/auth_screens/signup_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/assets_path.dart';
 
