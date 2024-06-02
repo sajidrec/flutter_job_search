@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:job_search/presentation/screens/job_details_screen.dart';
 import 'package:job_search/presentation/widgets/job_card_widget.dart';
 
-class SearchResultScreen extends StatelessWidget {
-  final String searchKeyword;
-
-  const SearchResultScreen({
+class FavouriteScreen extends StatelessWidget {
+  const FavouriteScreen({
     super.key,
-    required this.searchKeyword,
   });
 
   @override
@@ -25,7 +22,7 @@ class SearchResultScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      searchKeyword,
+                      "Favourite Job Posts",
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ],

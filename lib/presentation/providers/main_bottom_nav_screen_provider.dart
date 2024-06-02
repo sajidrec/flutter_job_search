@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/presentation/screens/favourite_screen.dart';
 import 'package:job_search/presentation/screens/home_screen.dart';
+import 'package:job_search/presentation/screens/setting_screen.dart';
 
 class MainBottomNavScreenProvider extends ChangeNotifier {
   int _getCurrentIndex = 0;
@@ -13,8 +15,8 @@ class MainBottomNavScreenProvider extends ChangeNotifier {
 
   final List _screens = [
     const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
+    const FavouriteScreen(),
+    const SettingScreen(),
   ];
 
   Widget getScreen() {
