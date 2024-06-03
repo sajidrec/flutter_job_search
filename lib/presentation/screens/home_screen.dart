@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/presentation/screens/all_polpular_job_list_screen.dart';
 import 'package:job_search/presentation/screens/job_details_screen.dart';
 import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
@@ -70,7 +71,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   AppColors.primaryShade.withOpacity(0.2),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AllPopularJobListScreen(),
+                  ),
+                );
+              },
               child: Text(
                 "View all",
                 style: Theme.of(context).textTheme.bodyLarge,
