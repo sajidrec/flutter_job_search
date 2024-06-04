@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "70435152868",
+    "project_id": "jobsearch-d0b5a",
+    "storage_bucket": "jobsearch-d0b5a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70435152868:android:5f4587a2692c831411ddf1",
+        "android_client_info": {
+          "package_name": "com.job_search_sajid_portfolioapp.job_search"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbgzvOpymVncb7nz8T90Wqpvl3u9ltEQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

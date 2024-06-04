@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/assets_path.dart';
+import 'package:job_search/presentation/validators/signup_screen_validators.dart';
 import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -48,6 +49,9 @@ class _SignupScreenState extends State<SignupScreen> {
       child: Column(
         children: [
           TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (value) => SignupScreenValidators.nameValidator(value),
+            maxLength: 35,
             controller: _fullNameTEController,
             decoration: const InputDecoration(
               hintText: "Full name",
@@ -56,6 +60,10 @@ class _SignupScreenState extends State<SignupScreen> {
           const SizedBox(height: 15),
           TextFormField(
             controller: _emailTEController,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            validator: (email) => SignupScreenValidators.emailValidator(
+              email,
+            ),
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
               hintText: "Email",
@@ -72,14 +80,17 @@ class _SignupScreenState extends State<SignupScreen> {
             teController: _confirmPasswordTEController,
           ),
           const SizedBox(height: 25),
-          _buildSignUpButton(context),
+          _buildSignUpButton(context: context, formKey: _formKey),
           const SizedBox(height: 20),
         ],
       ),
     );
   }
 
-  Widget _buildSignUpButton(BuildContext context) {
+  Widget _buildSignUpButton({
+    required BuildContext context,
+    required GlobalKey<FormState> formKey,
+  }) {
     return SizedBox(
       width: double.maxFinite,
       child: FilledButton(
@@ -91,7 +102,9 @@ class _SignupScreenState extends State<SignupScreen> {
             AppColors.secondary,
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          if (formKey.currentState!.validate()) {}
+        },
         child: const Text(
           "Sign Up",
           style: TextStyle(fontSize: 20),
@@ -100,12 +113,18 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Consumer<PasswordObscureProvider> _buildPasswordInputBox({
+  Widget _buildPasswordInputBox({
     required String hintMessage,
     required TextEditingController teController,
   }) {
     return Consumer<PasswordObscureProvider>(builder: (context, value, child) {
       return TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: (value) => SignupScreenValidators.passwordValidator(
+          value: value,
+          passwordTEController: _passwordTEController,
+          confirmPasswordTEController: _confirmPasswordTEController,
+        ),
         controller: teController,
         obscureText: value.isObscure,
         keyboardType: TextInputType.text,
