@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/presentation/providers/create_account_email_and_pass_provider.dart';
 import 'package:job_search/presentation/providers/main_bottom_nav_screen_provider.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
 import 'package:job_search/presentation/screens/main_bottom_nav_screen.dart';
@@ -22,7 +23,10 @@ class JobSearchApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => MainBottomNavScreenProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CreateAccountEmailAndPassProvider(),
+        ),
       ],
       child: MaterialApp(
         theme: _buildThemeData(),

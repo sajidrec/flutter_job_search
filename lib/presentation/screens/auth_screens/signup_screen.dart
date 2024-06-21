@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_search/presentation/providers/create_account_email_and_pass_provider.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
+import 'package:job_search/presentation/screens/auth_screens/login_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/assets_path.dart';
 import 'package:job_search/presentation/validators/signup_screen_validators.dart';
@@ -80,7 +83,12 @@ class _SignupScreenState extends State<SignupScreen> {
             teController: _confirmPasswordTEController,
           ),
           const SizedBox(height: 25),
-          _buildSignUpButton(context: context, formKey: _formKey),
+          _buildSignUpButton(
+            context: context,
+            formKey: _formKey,
+            emailTEController: _emailTEController,
+            passTEController: _passwordTEController,
+          ),
           const SizedBox(height: 20),
         ],
       ),
@@ -90,26 +98,61 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _buildSignUpButton({
     required BuildContext context,
     required GlobalKey<FormState> formKey,
+    required TextEditingController emailTEController,
+    required TextEditingController passTEController,
   }) {
     return SizedBox(
       width: double.maxFinite,
-      child: FilledButton(
-        style: ButtonStyle(
-          padding: WidgetStateProperty.all(
-            const EdgeInsets.all(16),
+      child: Consumer<CreateAccountEmailAndPassProvider>(
+          builder: (context, createAccountEmailAndPassProvider, child) {
+        return FilledButton(
+          style: ButtonStyle(
+            padding: WidgetStateProperty.all(
+              const EdgeInsets.all(16),
+            ),
+            backgroundColor: WidgetStateProperty.all(
+              AppColors.secondary,
+            ),
           ),
-          backgroundColor: WidgetStateProperty.all(
-            AppColors.secondary,
-          ),
-        ),
-        onPressed: () {
-          if (formKey.currentState!.validate()) {}
-        },
-        child: const Text(
-          "Sign Up",
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+          onPressed: () async {
+            if (formKey.currentState!.validate()) {
+              bool res = await createAccountEmailAndPassProvider.createRequest(
+                email: emailTEController.text.trim(),
+                password: passTEController.text,
+              );
+              if (res) {
+                Fluttertoast.showToast(
+                  msg: "Success",
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  toastLength: Toast.LENGTH_LONG,
+                );
+                if (mounted) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
+                }
+              } else {
+                Fluttertoast.showToast(
+                  msg: "Something went wrong",
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  toastLength: Toast.LENGTH_LONG,
+                );
+              }
+            }
+          },
+          child: createAccountEmailAndPassProvider.getInProgressStatus
+              ? const CircularProgressIndicator()
+              : const Text(
+                  "Sign Up",
+                  style: TextStyle(fontSize: 20),
+                ),
+        );
+      }),
     );
   }
 
