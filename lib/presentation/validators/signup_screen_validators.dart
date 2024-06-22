@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:job_search/presentation/utils/constants.dart';
 
 class SignupScreenValidators {
+
   static String? passwordValidator({
     required value,
     required TextEditingController passwordTEController,

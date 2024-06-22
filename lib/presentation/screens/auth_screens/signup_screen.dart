@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:job_search/presentation/providers/create_account_email_and_pass_provider.dart';
+import 'package:job_search/presentation/providers/auth_providers/create_account_email_and_pass_provider.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
 import 'package:job_search/presentation/screens/auth_screens/login_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';

@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class CreateAccountEmailAndPassProvider extends ChangeNotifier {
   bool _inProgressStatus = false;
@@ -22,7 +21,7 @@ class CreateAccountEmailAndPassProvider extends ChangeNotifier {
       );
       requestSuccessStatus = true;
 
-      //   TODO take user name
+      //   TODO: save user full name
     } catch (e) {
       requestSuccessStatus = false;
     }

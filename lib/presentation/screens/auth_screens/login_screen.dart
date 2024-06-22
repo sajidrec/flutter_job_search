@@ -1,9 +1,15 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_search/presentation/providers/auth_providers/login_provider.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
 import 'package:job_search/presentation/screens/auth_screens/forget_password_email_enter_screen.dart';
+import 'package:job_search/presentation/screens/home_screen.dart';
+import 'package:job_search/presentation/screens/main_bottom_nav_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/assets_path.dart';
+import 'package:job_search/presentation/validators/sign_in_screen_validator.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -41,7 +47,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       const SizedBox(height: 15),
                       _buildPasswordInputBox(),
                       const SizedBox(height: 35),
-                      _buildLoginButton(context),
+                      _buildLoginButton(
+                        context,
+                        formKey: _formKey,
+                      ),
                     ],
                   ),
                 ),
@@ -56,29 +65,43 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Consumer<PasswordObscureProvider> _buildPasswordInputBox() {
-    return Consumer<PasswordObscureProvider>(builder: (context, value, child) {
-      return TextFormField(
-        obscureText: value.isObscure,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          suffixIcon: IconButton(
-            onPressed: () {
-              value.toggleObscure();
-            },
-            icon: Icon(
-              (value.isObscure ? Icons.visibility_off : Icons.visibility),
-              color: AppColors.secondary,
-            ),
+    return Consumer<PasswordObscureProvider>(
+      builder: (context, passwordObscureProvider, child) {
+        return TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          obscureText: passwordObscureProvider.isObscure,
+          validator: (value) => SignInScreenValidator.passwordValidator(
+            value: value,
           ),
-          hintText: "Enter your password",
-        ),
-      );
-    });
+          controller: _passwordTEController,
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(
+            suffixIcon: IconButton(
+              onPressed: () {
+                passwordObscureProvider.toggleObscure();
+              },
+              icon: Icon(
+                (passwordObscureProvider.isObscure
+                    ? Icons.visibility_off
+                    : Icons.visibility),
+                color: AppColors.secondary,
+              ),
+            ),
+            hintText: "Enter your password",
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildEmailInputBox() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) => SignInScreenValidator.emailValidator(
+        value.toString().trim(),
+      ),
+      controller: _emailTEController,
       decoration: const InputDecoration(
         hintText: "Enter your email",
         suffixIcon: Icon(
@@ -89,38 +112,72 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _emailTEController.dispose();
-    _passwordTEController.dispose();
-  }
-
-  Widget _buildLoginButton(BuildContext context) {
+  Widget _buildLoginButton(
+    BuildContext context, {
+    required GlobalKey<FormState> formKey,
+  }) {
     return SizedBox(
       width: double.maxFinite,
-      child: OutlinedButton(
-        style: ButtonStyle(
-          overlayColor: WidgetStateProperty.all(
-            AppColors.primaryShade,
-          ),
-          padding: WidgetStateProperty.all(
-            const EdgeInsets.all(16),
-          ),
-          foregroundColor: WidgetStateProperty.all(Colors.white),
-          side: WidgetStateProperty.all(
-            const BorderSide(
-              width: 2,
-              color: AppColors.secondary,
+      child: Consumer<LoginProvider>(builder: (context, loginProvider, child) {
+        return OutlinedButton(
+          style: ButtonStyle(
+            overlayColor: WidgetStateProperty.all(
+              AppColors.primaryShade,
+            ),
+            padding: WidgetStateProperty.all(
+              const EdgeInsets.all(16),
+            ),
+            foregroundColor: WidgetStateProperty.all(Colors.white),
+            side: WidgetStateProperty.all(
+              const BorderSide(
+                width: 2,
+                color: AppColors.secondary,
+              ),
             ),
           ),
-        ),
-        onPressed: () {},
-        child: const Text(
-          "Login",
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+          onPressed: () async {
+            if (formKey.currentState!.validate()) {
+              bool loginSuccessful = await loginProvider.tryLogin(
+                email: _emailTEController.text.trim(),
+                pass: _passwordTEController.text.trim(),
+              );
+
+              if (loginSuccessful) {
+                Fluttertoast.showToast(
+                  msg: "Login Successful",
+                  backgroundColor: Colors.green,
+                  textColor: AppColors.textWhite,
+                );
+                if (mounted) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MainBottomNavScreen(),
+                    ),
+                    (route) => false,
+                  );
+                }
+              } else {
+                Fluttertoast.showToast(
+                  msg: "Login Failed",
+                  backgroundColor: Colors.red,
+                  textColor: AppColors.textWhite,
+                );
+              }
+            }
+          },
+          child: loginProvider.inProgress
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.secondary,
+                  ),
+                )
+              : const Text(
+                  "Login",
+                  style: TextStyle(fontSize: 20),
+                ),
+        );
+      }),
     );
   }
 
@@ -156,5 +213,12 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailTEController.dispose();
+    _passwordTEController.dispose();
   }
 }

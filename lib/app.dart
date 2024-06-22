@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:job_search/presentation/providers/create_account_email_and_pass_provider.dart';
+import 'package:job_search/change_notifier_provider_list.dart';
+import 'package:job_search/presentation/providers/auth_providers/create_account_email_and_pass_provider.dart';
 import 'package:job_search/presentation/providers/main_bottom_nav_screen_provider.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
 import 'package:job_search/presentation/screens/main_bottom_nav_screen.dart';
@@ -17,17 +18,7 @@ class JobSearchApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => PasswordObscureProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => MainBottomNavScreenProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => CreateAccountEmailAndPassProvider(),
-        ),
-      ],
+      providers: ChangeNotifierProviderList.getList(),
       child: MaterialApp(
         theme: _buildThemeData(),
         home: const SplashScreen(),
