@@ -4,4 +4,5 @@ class Constants {
   );
 
   static String userCredentialKey = "userCred";
+  static String userLoggedInKey = "userLoggedInKey";
 }

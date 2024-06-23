@@ -21,6 +21,7 @@ class UserCredentialProvider extends ChangeNotifier {
         sharedPreferences.getString(Constants.userCredentialKey) ?? "",
       ),
     );
+    await sharedPreferences.setBool(Constants.userLoggedInKey, true);
     notifyListeners();
   }
 }

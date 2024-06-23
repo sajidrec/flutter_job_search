@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:job_search/presentation/screens/auth_screens/signup_or_login_screen.dart';
+import 'package:job_search/presentation/screens/home_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
+import 'package:job_search/presentation/utils/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../widgets/center_circular_progress_indicator.dart';
@@ -18,17 +21,37 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(
-      const Duration(seconds: 3),
-      () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const SignupOrLoginScreen(),
-          ),
-        );
-      },
-    );
+    _moveToNextScreen();
+  }
+
+  Future<void> _moveToNextScreen() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    if (sharedPreferences.getBool(Constants.userLoggedInKey) ?? false) {
+      Timer(
+        const Duration(seconds: 3),
+        () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+          );
+        },
+      );
+    } else {
+      Timer(
+        const Duration(seconds: 3),
+        () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const SignupOrLoginScreen(),
+            ),
+          );
+        },
+      );
+    }
   }
 
   @override
