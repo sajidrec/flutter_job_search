@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:job_search/presentation/screens/auth_screens/signup_or_login_screen.dart';
-import 'package:job_search/presentation/screens/home_screen.dart';
+import 'package:job_search/presentation/screens/main_bottom_nav_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const HomeScreen(),
+              builder: (context) => const MainBottomNavScreen(),
             ),
           );
         },
