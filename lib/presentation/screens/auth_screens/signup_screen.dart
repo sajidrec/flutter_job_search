@@ -86,8 +86,6 @@ class _SignupScreenState extends State<SignupScreen> {
           _buildSignUpButton(
             context: context,
             formKey: _formKey,
-            emailTEController: _emailTEController,
-            passTEController: _passwordTEController,
           ),
           const SizedBox(height: 20),
         ],
@@ -98,8 +96,6 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _buildSignUpButton({
     required BuildContext context,
     required GlobalKey<FormState> formKey,
-    required TextEditingController emailTEController,
-    required TextEditingController passTEController,
   }) {
     return SizedBox(
       width: double.maxFinite,
@@ -117,8 +113,9 @@ class _SignupScreenState extends State<SignupScreen> {
           onPressed: () async {
             if (formKey.currentState!.validate()) {
               bool res = await createAccountEmailAndPassProvider.createRequest(
-                email: emailTEController.text.trim(),
-                password: passTEController.text,
+                email: _emailTEController.text.trim(),
+                password: _passwordTEController.text,
+                fullName: _fullNameTEController.text.trim(),
               );
               if (res) {
                 Fluttertoast.showToast(

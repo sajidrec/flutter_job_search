@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_search/presentation/providers/auth_providers/login_provider.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
 import 'package:job_search/presentation/screens/auth_screens/forget_password_email_enter_screen.dart';
-import 'package:job_search/presentation/screens/home_screen.dart';
 import 'package:job_search/presentation/screens/main_bottom_nav_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/assets_path.dart';
@@ -149,6 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   textColor: AppColors.textWhite,
                 );
                 if (mounted) {
+
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(

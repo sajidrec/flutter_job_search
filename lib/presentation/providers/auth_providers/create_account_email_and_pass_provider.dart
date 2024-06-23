@@ -7,8 +7,9 @@ class CreateAccountEmailAndPassProvider extends ChangeNotifier {
   bool get getInProgressStatus => _inProgressStatus;
 
   Future<bool> createRequest({
-    required email,
-    required password,
+    required String email,
+    required String password,
+    required String fullName,
   }) async {
     _inProgressStatus = true;
     bool requestSuccessStatus;
@@ -19,9 +20,10 @@ class CreateAccountEmailAndPassProvider extends ChangeNotifier {
         email: email,
         password: password,
       );
+
       requestSuccessStatus = true;
 
-      //   TODO: save user full name
+      await userCredential.user?.updateDisplayName(fullName);
     } catch (e) {
       requestSuccessStatus = false;
     }

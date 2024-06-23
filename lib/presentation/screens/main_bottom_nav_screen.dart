@@ -3,8 +3,20 @@ import 'package:job_search/presentation/providers/main_bottom_nav_screen_provide
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
-class MainBottomNavScreen extends StatelessWidget {
-  const MainBottomNavScreen({super.key});
+class MainBottomNavScreen extends StatefulWidget {
+  const MainBottomNavScreen({
+    super.key,
+  });
+
+  @override
+  State<MainBottomNavScreen> createState() => _MainBottomNavScreenState();
+}
+
+class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

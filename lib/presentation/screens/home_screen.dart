@@ -1,12 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:job_search/data/models/user_credential_model.dart';
 import 'package:job_search/presentation/screens/all_polpular_job_list_screen.dart';
 import 'package:job_search/presentation/screens/job_details_screen.dart';
 import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
+import 'package:job_search/presentation/utils/constants.dart';
 import 'package:job_search/presentation/widgets/job_card_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -15,6 +22,27 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _searchTEController = TextEditingController();
+
+  UserCredentialModel userCredentialModel = UserCredentialModel();
+
+  @override
+  void initState() {
+    super.initState();
+    requestUserCredential();
+  }
+
+  Future<void> requestUserCredential() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    userCredentialModel = UserCredentialModel.fromJson(
+      jsonDecode(
+        sharedPreferences.getString(
+              Constants.userCredentialKey,
+            ) ??
+            "",
+      ),
+    );
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -293,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                   ),
                   Text(
-                    "Sajid Hossain",
+                    userCredentialModel.name ?? "Unknown",
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                 ],
