@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/presentation/providers/auth_providers/logout_provider.dart';
+import 'package:job_search/presentation/screens/auth_screens/signup_or_login_screen.dart';
 import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
+import 'package:provider/provider.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -30,19 +33,34 @@ class SettingScreen extends StatelessWidget {
   Widget _buildLogoutButton({required BuildContext context}) {
     return SizedBox(
       width: double.maxFinite,
-      child: FilledButton(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(AppColors.primaryShade),
-        ),
-        onPressed: () {},
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            "Logout",
-            style: Theme.of(context).textTheme.bodyLarge,
+      child:
+          Consumer<LogoutProvider>(builder: (context, logoutProvider, child) {
+        return FilledButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(AppColors.primaryShade),
           ),
-        ),
-      ),
+          onPressed: () async {
+            await logoutProvider.logout();
+
+            if (context.mounted) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SignupOrLoginScreen(),
+                ),
+                (route) => false,
+              );
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "Logout",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ),
+        );
+      }),
     );
   }
 
