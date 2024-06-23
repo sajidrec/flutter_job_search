@@ -1,3 +1,4 @@
+import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'presentation/providers/auth_providers/create_account_email_and_pass_provider.dart';
@@ -18,6 +19,9 @@ class ChangeNotifierProviderList {
         ),
         ChangeNotifierProvider(
           create: (context) => LoginProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserCredentialProvider(),
         ),
       ];
 }

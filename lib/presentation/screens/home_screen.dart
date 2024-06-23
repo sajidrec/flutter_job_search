@@ -1,14 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:job_search/data/models/user_credential_model.dart';
+import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/screens/all_polpular_job_list_screen.dart';
 import 'package:job_search/presentation/screens/job_details_screen.dart';
 import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
-import 'package:job_search/presentation/utils/constants.dart';
 import 'package:job_search/presentation/widgets/job_card_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -23,25 +20,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _searchTEController = TextEditingController();
 
-  UserCredentialModel userCredentialModel = UserCredentialModel();
-
   @override
   void initState() {
     super.initState();
-    requestUserCredential();
-  }
-
-  Future<void> requestUserCredential() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    userCredentialModel = UserCredentialModel.fromJson(
-      jsonDecode(
-        sharedPreferences.getString(
-              Constants.userCredentialKey,
-            ) ??
-            "",
-      ),
-    );
-    setState(() {});
   }
 
   @override
@@ -320,10 +301,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white38,
                         ),
                   ),
-                  Text(
-                    userCredentialModel.name ?? "Unknown",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
+                  Consumer<UserCredentialProvider>(
+                      builder: (context, user, child) {
+                    user.requestUserInfo();
+                    return Text(
+                      user.userInfo.name ?? "Unknown",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    );
+                  }),
                 ],
               )
             ],
