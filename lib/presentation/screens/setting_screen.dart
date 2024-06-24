@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_search/presentation/providers/auth_providers/logout_provider.dart';
+import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/screens/auth_screens/signup_or_login_screen.dart';
 import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
@@ -81,12 +82,16 @@ class SettingScreen extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Sajid Hossain",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
+                Consumer<UserCredentialProvider>(
+                    builder: (context, userCredentialProvider, child) {
+                  userCredentialProvider.requestUserInfo();
+                  return Text(
+                    userCredentialProvider.userInfo.name ?? "Unknown",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  );
+                }),
                 IconButton(
                   iconSize: 25,
                   onPressed: () {

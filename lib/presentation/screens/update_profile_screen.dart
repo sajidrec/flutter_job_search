@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
+import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +24,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _fullNameTEController.text = widget.fullName;
   }
 
   @override
@@ -48,11 +48,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           const SizedBox(height: 10),
           _buildImagePicker(),
           const SizedBox(height: 16),
-          TextFormField(
-            maxLength: 35,
-            maxLines: 1,
-            controller: _fullNameTEController,
-          ),
+          Consumer<UserCredentialProvider>(
+              builder: (context, userCredentialProvider, child) {
+            userCredentialProvider.requestUserInfo();
+            _fullNameTEController.text =
+                userCredentialProvider.userInfo.name ?? "Unknown";
+            return TextFormField(
+              maxLength: 35,
+              maxLines: 1,
+              controller: _fullNameTEController,
+            );
+          }),
           const SizedBox(height: 16),
           _buildPasswordInputBox(),
           const SizedBox(height: 30),
