@@ -1,3 +1,4 @@
+import 'package:job_search/presentation/providers/auth_providers/forget_password_provider.dart';
 import 'package:job_search/presentation/providers/auth_providers/logout_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,9 @@ class ChangeNotifierProviderList {
         ),
         ChangeNotifierProvider(
           create: (context) => LogoutProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ForgetPasswordProvider(),
         ),
       ];
 }

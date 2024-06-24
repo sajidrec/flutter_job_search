@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_search/presentation/providers/auth_providers/forget_password_provider.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/utils/assets_path.dart';
+import 'package:job_search/presentation/validators/forget_password_screen_validator.dart';
+import 'package:provider/provider.dart';
 
 class ForgetPasswordEmailEnterScreen extends StatefulWidget {
   const ForgetPasswordEmailEnterScreen({super.key});
@@ -44,6 +48,8 @@ class _ForgetPasswordEmailEnterScreenState
       child: Column(
         children: [
           TextFormField(
+            validator: (email) =>
+                ForgetPasswordScreenValidator.emailValidator(email),
             controller: _emailTEController,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
@@ -61,30 +67,59 @@ class _ForgetPasswordEmailEnterScreenState
   Widget _buildSendEmailButton() {
     return SizedBox(
       width: double.maxFinite,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          overlayColor: WidgetStateProperty.all(
-            AppColors.primaryShade.withOpacity(0.2),
+      child: Consumer<ForgetPasswordProvider>(
+          builder: (context, forgetPasswordProvider, child) {
+        return ElevatedButton(
+          style: ButtonStyle(
+            overlayColor: WidgetStateProperty.all(
+              AppColors.primaryShade.withOpacity(0.2),
+            ),
+            padding: WidgetStateProperty.all(
+              const EdgeInsets.all(18),
+            ),
+            backgroundColor: WidgetStateProperty.all(
+              AppColors.secondary,
+            ),
+            foregroundColor: WidgetStateProperty.all(
+              AppColors.textWhite,
+            ),
           ),
-          padding: WidgetStateProperty.all(
-            const EdgeInsets.all(18),
-          ),
-          backgroundColor: WidgetStateProperty.all(
-            AppColors.secondary,
-          ),
-          foregroundColor: WidgetStateProperty.all(
-            AppColors.textWhite,
-          ),
-        ),
-        onPressed: () {},
-        child: const Text(
-          "Send email",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ),
+          onPressed: () async {
+            if (_formKey.currentState!.validate()) {
+              bool requestSuccess = await forgetPasswordProvider
+                  .sendCodeInEmail(email: _emailTEController.text.trim());
+              if (requestSuccess) {
+                Fluttertoast.showToast(
+                  msg: "Please check your email",
+                  backgroundColor: Colors.green,
+                  textColor: AppColors.textWhite,
+                  toastLength: Toast.LENGTH_LONG,
+                );
+              } else {
+                Fluttertoast.showToast(
+                  msg: "Something went wrong",
+                  backgroundColor: Colors.red,
+                  textColor: AppColors.textWhite,
+                  toastLength: Toast.LENGTH_LONG,
+                );
+              }
+            }
+          },
+          child: forgetPasswordProvider.inProgress
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.textWhite,
+                  ),
+                )
+              : const Text(
+                  "Send email",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+        );
+      }),
     );
   }
 
