@@ -6,8 +6,24 @@ import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
-class SettingScreen extends StatelessWidget {
+class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
+
+  @override
+  State<SettingScreen> createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        Provider.of<UserCredentialProvider>(context, listen: false)
+            .requestUserInfo();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +100,6 @@ class SettingScreen extends StatelessWidget {
               children: [
                 Consumer<UserCredentialProvider>(
                     builder: (context, userCredentialProvider, child) {
-                  userCredentialProvider.requestUserInfo();
                   return Text(
                     userCredentialProvider.userInfo.name ?? "Unknown",
                     maxLines: 1,

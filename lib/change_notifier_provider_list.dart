@@ -7,6 +7,7 @@ import 'presentation/providers/auth_providers/create_account_email_and_pass_prov
 import 'presentation/providers/auth_providers/login_provider.dart';
 import 'presentation/providers/main_bottom_nav_screen_provider.dart';
 import 'presentation/providers/password_obscure_provider.dart';
+import 'presentation/providers/job_list_provider.dart';
 
 class ChangeNotifierProviderList {
   static dynamic getList() => [
@@ -30,6 +31,9 @@ class ChangeNotifierProviderList {
         ),
         ChangeNotifierProvider(
           create: (context) => ForgetPasswordProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => JobListProvider(),
         ),
       ];
 }

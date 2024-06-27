@@ -24,6 +24,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        Provider.of<UserCredentialProvider>(context, listen: false)
+            .requestUserInfo();
+      },
+    );
   }
 
   @override
@@ -50,7 +56,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           const SizedBox(height: 16),
           Consumer<UserCredentialProvider>(
               builder: (context, userCredentialProvider, child) {
-            userCredentialProvider.requestUserInfo();
             _fullNameTEController.text =
                 userCredentialProvider.userInfo.name ?? "Unknown";
             return TextFormField(

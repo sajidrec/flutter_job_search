@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/presentation/providers/job_list_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
-import 'package:job_search/presentation/screens/all_polpular_job_list_screen.dart';
+import 'package:job_search/presentation/screens/all_popular_job_list_screen.dart';
 import 'package:job_search/presentation/screens/job_details_screen.dart';
 import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
@@ -23,6 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        Provider.of<JobListProvider>(context, listen: false)
+            .requestJobList(keyword: "Popular");
+      },
+    );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        Provider.of<UserCredentialProvider>(context, listen: false)
+            .requestUserInfo();
+      },
+    );
   }
 
   @override
@@ -96,30 +109,42 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         const SizedBox(height: 14),
-        ListView.separated(
-          shrinkWrap: true,
-          primary: false,
-          itemBuilder: (context, index) => JobCardWidget(
-            context: context,
-            imageUrl:
-                'https://w7.pngwing.com/pngs/63/1016/png-transparent-google-logo-google-logo-g-suite-chrome-text-logo-chrome.png',
-            jobTitle: 'UI/UX Designer',
-            companyName: 'Google',
-            datePosted: '20/12/2020',
-            onTapFunction: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const JobDetailsScreen(),
-                ),
-              );
-            },
-          ),
-          separatorBuilder: (context, index) => const SizedBox(
-            height: 10,
-          ),
-          itemCount: 4,
-        ),
+        Consumer<JobListProvider>(
+            builder: (context, popularJobProvider, child) {
+          return popularJobProvider.inProgress
+              ? const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.secondary,
+                  ),
+                )
+              : ListView.separated(
+                  shrinkWrap: true,
+                  primary: false,
+                  itemBuilder: (context, index) => JobCardWidget(
+                    context: context,
+                    imageUrl:
+                        popularJobProvider.jobList[index].employerLogo ?? "",
+                    jobTitle: popularJobProvider.jobList[index].jobTitle ?? "",
+                    companyName:
+                        popularJobProvider.jobList[index].jobPublisher ?? "",
+                    datePosted: popularJobProvider
+                        .jobList[index].jobPostedAtTimestamp
+                        .toString(),
+                    onTapFunction: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const JobDetailsScreen(),
+                        ),
+                      );
+                    },
+                  ),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 10,
+                  ),
+                  itemCount: popularJobProvider.jobList.length,
+                );
+        }),
       ],
     );
   }
@@ -303,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Consumer<UserCredentialProvider>(
                       builder: (context, user, child) {
-                    user.requestUserInfo();
+                    // user.requestUserInfo();
                     return Text(
                       user.userInfo.name ?? "Unknown",
                       style: Theme.of(context).textTheme.bodyLarge,
