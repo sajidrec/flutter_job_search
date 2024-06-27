@@ -35,7 +35,6 @@ class JobCardWidget extends StatelessWidget {
                 flex: 12,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       flex: 3,
@@ -44,8 +43,10 @@ class JobCardWidget extends StatelessWidget {
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl: imageUrl,
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
+                          errorWidget: (context, url, error) => const Icon(
+                            Icons.broken_image,
+                            color: AppColors.textWhite,
+                          ),
                         ),
                       ),
                     ),

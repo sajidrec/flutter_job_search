@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:job_search/presentation/providers/job_list_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/screens/all_popular_job_list_screen.dart';
@@ -26,8 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        Provider.of<JobListProvider>(context, listen: false)
-            .requestJobList(keyword: "Popular");
+        Provider.of<JobListProvider>(context, listen: false).requestJobList(
+          keyword: "Popular",
+        );
       },
     );
     WidgetsBinding.instance.addPostFrameCallback(
@@ -110,41 +112,53 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         const SizedBox(height: 14),
         Consumer<JobListProvider>(
-            builder: (context, popularJobProvider, child) {
-          return popularJobProvider.inProgress
-              ? const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.secondary,
-                  ),
-                )
-              : ListView.separated(
-                  shrinkWrap: true,
-                  primary: false,
-                  itemBuilder: (context, index) => JobCardWidget(
-                    context: context,
-                    imageUrl:
-                        popularJobProvider.jobList[index].employerLogo ?? "",
-                    jobTitle: popularJobProvider.jobList[index].jobTitle ?? "",
-                    companyName:
-                        popularJobProvider.jobList[index].jobPublisher ?? "",
-                    datePosted: popularJobProvider
-                        .jobList[index].jobPostedAtTimestamp
-                        .toString(),
-                    onTapFunction: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const JobDetailsScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 10,
-                  ),
-                  itemCount: popularJobProvider.jobList.length,
-                );
-        }),
+          builder: (context, popularJobProvider, child) {
+            return popularJobProvider.inProgress
+                ? const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.secondary,
+                    ),
+                  )
+                : ListView.separated(
+                    shrinkWrap: true,
+                    primary: false,
+                    itemBuilder: (context, index) => JobCardWidget(
+                      context: context,
+                      imageUrl: popularJobProvider
+                              .jobList.data?[index].employerLogo ??
+                          "",
+                      jobTitle:
+                          popularJobProvider.jobList.data?[index].jobTitle ??
+                              "",
+                      companyName: popularJobProvider
+                              .jobList.data?[index].jobPublisher ??
+                          "",
+                      datePosted: DateFormat('dd-MM-yyyy - kk:mm a').format(
+                        DateTime.parse(
+                          popularJobProvider.jobList.data?[index]
+                                  .jobPostedAtDatetimeUtc ??
+                              DateTime.now().toString(),
+                        ).toLocal(),
+                      ),
+                      onTapFunction: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const JobDetailsScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 10,
+                    ),
+                    itemCount:
+                        (popularJobProvider.jobList.data?.length ?? 0) > 4
+                            ? 4
+                            : (popularJobProvider.jobList.data?.length ?? 0),
+                  );
+          },
+        ),
       ],
     );
   }

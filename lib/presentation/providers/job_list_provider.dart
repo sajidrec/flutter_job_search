@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:job_search/data/models/job_card_model.dart';
+import 'package:job_search/data/models/job_details_list_model.dart';
 import 'package:job_search/data/utils/urls.dart';
 import 'package:job_search/secret/secret_info.dart';
 
@@ -9,16 +9,16 @@ class JobListProvider extends ChangeNotifier {
 
   bool get inProgress => _inProgress;
 
-  final List<JobCardModel> _jobList = [];
+  JobDetailsListModel _jobList = JobDetailsListModel();
 
-  List<JobCardModel> get jobList => _jobList;
+  JobDetailsListModel get jobList => _jobList;
 
   Future<void> requestJobList({
     required String keyword,
   }) async {
-    _jobList.clear();
     _inProgress = true;
     notifyListeners();
+
     try {
       final response = await Dio().get(
         Urls.getSearchUrl(
@@ -29,13 +29,8 @@ class JobListProvider extends ChangeNotifier {
         ),
       );
 
-      for (int i = 0; i < (await response.data["data"].length ?? 0); i++) {
-        _jobList.add(
-          JobCardModel.fromJson(
-            await response.data["data"][i],
-          ),
-        );
-      }
+      _jobList = JobDetailsListModel.fromJson(await response.data);
+
       _inProgress = false;
       notifyListeners();
     } catch (e) {
