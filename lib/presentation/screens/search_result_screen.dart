@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:job_search/data/models/job_data_model.dart';
 import 'package:job_search/presentation/screens/job_details_screen.dart';
 import 'package:job_search/presentation/widgets/job_card_widget.dart';
 
@@ -45,7 +46,9 @@ class SearchResultScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const JobDetailsScreen(),
+                          builder: (context) => JobDetailsScreen(
+                            jobDetails: JobDataModel(),
+                          ),
                         ),
                       );
                     },

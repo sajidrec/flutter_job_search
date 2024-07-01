@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:job_search/data/models/job_data_model.dart';
 import 'package:job_search/presentation/providers/job_list_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/screens/all_popular_job_list_screen.dart';
@@ -144,7 +145,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const JobDetailsScreen(),
+                            builder: (context) => JobDetailsScreen(
+                              jobDetails:
+                                  popularJobProvider.jobList.data?[index] ??
+                                      JobDataModel(),
+                            ),
                           ),
                         );
                       },

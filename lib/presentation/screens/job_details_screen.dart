@@ -1,9 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:job_search/data/models/job_data_model.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 
 class JobDetailsScreen extends StatelessWidget {
-  const JobDetailsScreen({super.key});
+  const JobDetailsScreen({
+    required this.jobDetails,
+    super.key,
+  });
+
+  final JobDataModel jobDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -26,22 +33,28 @@ class JobDetailsScreen extends StatelessWidget {
                       children: [
                         _buildHeaderSection(
                           context: context,
-                          imageUrl:
-                              'https://w7.pngwing.com/pngs/63/1016/png-transparent-google-logo-google-logo-g-suite-chrome-text-logo-chrome.png',
-                          jobTitle: "Programmer",
-                          companyName: "Google",
-                          website: "www.google.com",
+                          imageUrl: jobDetails.employerLogo ?? "",
+                          jobTitle: jobDetails.jobTitle ?? "Unknown",
+                          companyName: jobDetails.employerName ?? "Unknown",
+                          website: jobDetails.employerWebsite ?? "",
                         ),
                         const SizedBox(height: 16),
-                        _buildJobTypeDescription(),
+                        _buildJobTypeDescription(
+                          jobDetails: jobDetails,
+                          context,
+                        ),
                         const SizedBox(height: 16),
                         _buildJobDescriptionAndRequirements(
                           context: context,
                           jobDescription:
-                              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitiaLorem ipsum dolor sit amet consectetur adipisicing elit. Maxime ",
+                              jobDetails.jobDescription ?? "Not Available",
                           jobRequirements:
-                              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitiaLorem ipsum dolor sit amet consectetur adipisicing elit. Maxime",
+                              getJobRequirementString(jobDetails) ??
+                                  "Not mentioned",
                         ),
+                        const SizedBox(
+                          height: 150,
+                        )
                       ],
                     ),
                   ),
@@ -86,22 +99,48 @@ class JobDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildJobTypeDescription() {
-    return GridView.builder(
+  Widget _buildJobTypeDescription(
+    BuildContext context, {
+    required JobDataModel jobDetails,
+  }) {
+    return GridView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: 4,
+      // itemCount: 4,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 2,
         mainAxisSpacing: 5,
         crossAxisSpacing: 5,
       ),
-      itemBuilder: (context, index) => _buildJobStatusChip(
-        context: context,
-        statusTypeName: "Job Type",
-        status: "Remote/Hybrid",
-      ),
+
+      children: [
+        _buildJobStatusChip(
+          context: context,
+          statusTypeName: "Job Type",
+          status: jobDetails.jobEmploymentType ?? "N/A",
+        ),
+        _buildJobStatusChip(
+          context: context,
+          statusTypeName: "Remote Job",
+          status: (jobDetails.jobIsRemote ?? false) ? "YES" : "NO",
+        ),
+        _buildJobStatusChip(
+          context: context,
+          statusTypeName: "City",
+          status: jobDetails.jobCity ?? "N/A",
+        ),
+        _buildJobStatusChip(
+          context: context,
+          statusTypeName: "Expire Date",
+          status: (jobDetails.jobOfferExpirationDatetimeUtc == null)
+              ? "N/A"
+              : DateFormat('dd-MM-yyyy - kk:mm a').format(
+                  DateTime.parse(
+                      jobDetails.jobOfferExpirationDatetimeUtc ?? ""),
+                ),
+        ),
+      ],
     );
   }
 
@@ -176,55 +215,99 @@ class JobDetailsScreen extends StatelessWidget {
     required String companyName,
     required String website,
   }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.keyboard_backspace_rounded),
-        ),
-        Column(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: imageUrl,
-                fit: BoxFit.cover,
-                height: 80,
-                width: 80,
-              ),
-            ),
-            const SizedBox(height: 25),
-            Text(
-              jobTitle,
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            Text(
-              companyName,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: AppColors.textWhite.withOpacity(
-                      0.9,
-                    ),
-                  ),
-            ),
-            Text(
-              website,
-              style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: Colors.blue,
-                  ),
-            ),
-          ],
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.favorite_outline_rounded,
+    return SizedBox(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.keyboard_backspace_rounded),
           ),
-        ),
-      ],
+          Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl: imageUrl,
+                  fit: BoxFit.cover,
+                  height: 80,
+                  width: 80,
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.broken_image_rounded,
+                    size: 50,
+                    color: AppColors.textWhite,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 25),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Center(
+                  child: Text(
+                    jobTitle,
+                    style: Theme.of(context).textTheme.bodyLarge,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 1.5,
+                child: Center(
+                  child: Text(
+                    companyName,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: AppColors.textWhite.withOpacity(
+                            0.9,
+                          ),
+                        ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
+              Text(
+                website,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Colors.blue,
+                    ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.favorite_outline_rounded,
+            ),
+          ),
+        ],
+      ),
     );
+  }
+
+  String? getJobRequirementString(JobDataModel jobDetails) {
+    String? result;
+    for (int i = 0;
+        i < (jobDetails.jobHighlights?.qualifications?.length ?? 0);
+        i++) {
+      if (jobDetails.jobHighlights?.qualifications?[i] != null ||
+          jobDetails.jobHighlights?.qualifications?[i] != "") {
+        if (result != null) {
+          result += "${i + 1}. ";
+          result += jobDetails.jobHighlights?.qualifications?[i] ?? "";
+          result += "\n";
+        } else {
+          result = "${i + 1}. ";
+          result += jobDetails.jobHighlights?.qualifications?[i] ?? "";
+          result += "\n";
+        }
+      }
+    }
+    return result;
   }
 }
