@@ -135,7 +135,7 @@ class JobDetailsScreen extends StatelessWidget {
           statusTypeName: "Expire Date",
           status: (jobDetails.jobOfferExpirationDatetimeUtc == null)
               ? "N/A"
-              : DateFormat('dd-MM-yyyy - kk:mm a').format(
+              : DateFormat('dd-MM-yyyy - hh:mm a').format(
                   DateTime.parse(
                     jobDetails.jobOfferExpirationDatetimeUtc ?? "",
                   ),
