@@ -4,45 +4,45 @@ import 'package:job_search/data/models/job_required_experience_model.dart';
 
 class JobDataModel {
   JobDataModel({
-    String? employerName,
-    String? employerLogo,
+    dynamic employerName,
+    dynamic employerLogo,
     dynamic employerWebsite,
-    String? employerCompanyType,
-    String? jobPublisher,
-    String? jobId,
-    String? jobEmploymentType,
-    String? jobTitle,
-    String? jobApplyLink,
-    bool? jobApplyIsDirect,
-    num? jobApplyQualityScore,
-    String? jobDescription,
-    bool? jobIsRemote,
-    num? jobPostedAtTimestamp,
-    String? jobPostedAtDatetimeUtc,
-    String? jobCity,
-    String? jobState,
-    String? jobCountry,
-    num? jobLatitude,
-    num? jobLongitude,
+    dynamic employerCompanyType,
+    dynamic jobPublisher,
+    dynamic jobId,
+    dynamic jobEmploymentType,
+    dynamic jobTitle,
+    dynamic jobApplyLink,
+    dynamic jobApplyIsDirect,
+    dynamic jobApplyQualityScore,
+    dynamic jobDescription,
+    dynamic jobIsRemote,
+    dynamic jobPostedAtTimestamp,
+    dynamic jobPostedAtDatetimeUtc,
+    dynamic jobCity,
+    dynamic jobState,
+    dynamic jobCountry,
+    dynamic jobLatitude,
+    dynamic jobLongitude,
     dynamic jobBenefits,
-    String? jobGoogleLink,
-    String? jobOfferExpirationDatetimeUtc,
-    num? jobOfferExpirationTimestamp,
+    dynamic jobGoogleLink,
+    dynamic jobOfferExpirationDatetimeUtc,
+    dynamic jobOfferExpirationTimestamp,
     JobRequiredExperienceModel? jobRequiredExperience,
     dynamic jobRequiredSkills,
     JobRequiredEducationModel? jobRequiredEducation,
-    bool? jobExperienceInPlaceOfEducation,
+    dynamic jobExperienceInPlaceOfEducation,
     dynamic jobMinSalary,
     dynamic jobMaxSalary,
     dynamic jobSalaryCurrency,
     dynamic jobSalaryPeriod,
     JobHighlightsModel? jobHighlights,
     dynamic jobJobTitle,
-    String? jobPostingLanguage,
-    String? jobOnetSoc,
-    String? jobOnetJobZone,
-    String? jobNaicsCode,
-    String? jobNaicsName,
+    dynamic jobPostingLanguage,
+    dynamic jobOnetSoc,
+    dynamic jobOnetJobZone,
+    dynamic jobNaicsCode,
+    dynamic jobNaicsName,
   }) {
     _employerName = employerName;
     _employerLogo = employerLogo;
@@ -134,71 +134,71 @@ class JobDataModel {
     _jobNaicsName = json['job_naics_name'];
   }
 
-  String? _employerName;
-  String? _employerLogo;
+  dynamic _employerName;
+  dynamic _employerLogo;
   dynamic _employerWebsite;
-  String? _employerCompanyType;
-  String? _jobPublisher;
-  String? _jobId;
-  String? _jobEmploymentType;
-  String? _jobTitle;
-  String? _jobApplyLink;
-  bool? _jobApplyIsDirect;
-  num? _jobApplyQualityScore;
-  String? _jobDescription;
-  bool? _jobIsRemote;
-  num? _jobPostedAtTimestamp;
-  String? _jobPostedAtDatetimeUtc;
-  String? _jobCity;
-  String? _jobState;
-  String? _jobCountry;
-  num? _jobLatitude;
-  num? _jobLongitude;
+  dynamic _employerCompanyType;
+  dynamic _jobPublisher;
+  dynamic _jobId;
+  dynamic _jobEmploymentType;
+  dynamic _jobTitle;
+  dynamic _jobApplyLink;
+  dynamic _jobApplyIsDirect;
+  dynamic _jobApplyQualityScore;
+  dynamic _jobDescription;
+  dynamic _jobIsRemote;
+  dynamic _jobPostedAtTimestamp;
+  dynamic _jobPostedAtDatetimeUtc;
+  dynamic _jobCity;
+  dynamic _jobState;
+  dynamic _jobCountry;
+  dynamic _jobLatitude;
+  dynamic _jobLongitude;
   dynamic _jobBenefits;
-  String? _jobGoogleLink;
-  String? _jobOfferExpirationDatetimeUtc;
-  num? _jobOfferExpirationTimestamp;
+  dynamic _jobGoogleLink;
+  dynamic _jobOfferExpirationDatetimeUtc;
+  dynamic _jobOfferExpirationTimestamp;
   JobRequiredExperienceModel? _jobRequiredExperience;
   dynamic _jobRequiredSkills;
   JobRequiredEducationModel? _jobRequiredEducation;
-  bool? _jobExperienceInPlaceOfEducation;
+  dynamic _jobExperienceInPlaceOfEducation;
   dynamic _jobMinSalary;
   dynamic _jobMaxSalary;
   dynamic _jobSalaryCurrency;
   dynamic _jobSalaryPeriod;
   JobHighlightsModel? _jobHighlights;
   dynamic _jobJobTitle;
-  String? _jobPostingLanguage;
-  String? _jobOnetSoc;
-  String? _jobOnetJobZone;
-  String? _jobNaicsCode;
-  String? _jobNaicsName;
+  dynamic _jobPostingLanguage;
+  dynamic _jobOnetSoc;
+  dynamic _jobOnetJobZone;
+  dynamic _jobNaicsCode;
+  dynamic _jobNaicsName;
 
   JobDataModel copyWith({
-    String? employerName,
-    String? employerLogo,
+    dynamic employerName,
+    dynamic employerLogo,
     dynamic employerWebsite,
-    String? employerCompanyType,
-    String? jobPublisher,
-    String? jobId,
-    String? jobEmploymentType,
-    String? jobTitle,
-    String? jobApplyLink,
-    bool? jobApplyIsDirect,
-    num? jobApplyQualityScore,
-    String? jobDescription,
-    bool? jobIsRemote,
-    num? jobPostedAtTimestamp,
-    String? jobPostedAtDatetimeUtc,
-    String? jobCity,
-    String? jobState,
-    String? jobCountry,
-    num? jobLatitude,
-    num? jobLongitude,
+    dynamic employerCompanyType,
+    dynamic jobPublisher,
+    dynamic jobId,
+    dynamic jobEmploymentType,
+    dynamic jobTitle,
+    dynamic jobApplyLink,
+    dynamic jobApplyIsDirect,
+    dynamic jobApplyQualityScore,
+    dynamic jobDescription,
+    dynamic jobIsRemote,
+    dynamic jobPostedAtTimestamp,
+    dynamic jobPostedAtDatetimeUtc,
+    dynamic jobCity,
+    dynamic jobState,
+    dynamic jobCountry,
+    dynamic jobLatitude,
+    dynamic jobLongitude,
     dynamic jobBenefits,
-    String? jobGoogleLink,
-    String? jobOfferExpirationDatetimeUtc,
-    num? jobOfferExpirationTimestamp,
+    dynamic jobGoogleLink,
+    dynamic jobOfferExpirationDatetimeUtc,
+    dynamic jobOfferExpirationTimestamp,
     JobRequiredExperienceModel? jobRequiredExperience,
     dynamic jobRequiredSkills,
     JobRequiredEducationModel? jobRequiredEducation,
@@ -209,11 +209,11 @@ class JobDataModel {
     dynamic jobSalaryPeriod,
     JobHighlightsModel? jobHighlights,
     dynamic jobJobTitle,
-    String? jobPostingLanguage,
-    String? jobOnetSoc,
-    String? jobOnetJobZone,
-    String? jobNaicsCode,
-    String? jobNaicsName,
+    dynamic jobPostingLanguage,
+    dynamic jobOnetSoc,
+    dynamic jobOnetJobZone,
+    dynamic jobNaicsCode,
+    dynamic jobNaicsName,
   }) =>
       JobDataModel(
         employerName: employerName ?? _employerName,
@@ -261,53 +261,53 @@ class JobDataModel {
         jobNaicsName: jobNaicsName ?? _jobNaicsName,
       );
 
-  String? get employerName => _employerName;
+  dynamic get employerName => _employerName;
 
-  String? get employerLogo => _employerLogo;
+  dynamic get employerLogo => _employerLogo;
 
   dynamic get employerWebsite => _employerWebsite;
 
-  String? get employerCompanyType => _employerCompanyType;
+  dynamic get employerCompanyType => _employerCompanyType;
 
-  String? get jobPublisher => _jobPublisher;
+  dynamic get jobPublisher => _jobPublisher;
 
-  String? get jobId => _jobId;
+  dynamic get jobId => _jobId;
 
-  String? get jobEmploymentType => _jobEmploymentType;
+  dynamic get jobEmploymentType => _jobEmploymentType;
 
-  String? get jobTitle => _jobTitle;
+  dynamic get jobTitle => _jobTitle;
 
-  String? get jobApplyLink => _jobApplyLink;
+  dynamic get jobApplyLink => _jobApplyLink;
 
-  bool? get jobApplyIsDirect => _jobApplyIsDirect;
+  dynamic get jobApplyIsDirect => _jobApplyIsDirect;
 
-  num? get jobApplyQualityScore => _jobApplyQualityScore;
+  dynamic get jobApplyQualityScore => _jobApplyQualityScore;
 
-  String? get jobDescription => _jobDescription;
+  dynamic get jobDescription => _jobDescription;
 
-  bool? get jobIsRemote => _jobIsRemote;
+  dynamic get jobIsRemote => _jobIsRemote;
 
-  num? get jobPostedAtTimestamp => _jobPostedAtTimestamp;
+  dynamic get jobPostedAtTimestamp => _jobPostedAtTimestamp;
 
-  String? get jobPostedAtDatetimeUtc => _jobPostedAtDatetimeUtc;
+  dynamic get jobPostedAtDatetimeUtc => _jobPostedAtDatetimeUtc;
 
-  String? get jobCity => _jobCity;
+  dynamic get jobCity => _jobCity;
 
-  String? get jobState => _jobState;
+  dynamic get jobState => _jobState;
 
-  String? get jobCountry => _jobCountry;
+  dynamic get jobCountry => _jobCountry;
 
-  num? get jobLatitude => _jobLatitude;
+  dynamic get jobLatitude => _jobLatitude;
 
-  num? get jobLongitude => _jobLongitude;
+  dynamic get jobLongitude => _jobLongitude;
 
   dynamic get jobBenefits => _jobBenefits;
 
-  String? get jobGoogleLink => _jobGoogleLink;
+  dynamic get jobGoogleLink => _jobGoogleLink;
 
-  String? get jobOfferExpirationDatetimeUtc => _jobOfferExpirationDatetimeUtc;
+  dynamic get jobOfferExpirationDatetimeUtc => _jobOfferExpirationDatetimeUtc;
 
-  num? get jobOfferExpirationTimestamp => _jobOfferExpirationTimestamp;
+  dynamic get jobOfferExpirationTimestamp => _jobOfferExpirationTimestamp;
 
   JobRequiredExperienceModel? get jobRequiredExperience =>
       _jobRequiredExperience;
@@ -316,7 +316,7 @@ class JobDataModel {
 
   JobRequiredEducationModel? get jobRequiredEducation => _jobRequiredEducation;
 
-  bool? get jobExperienceInPlaceOfEducation => _jobExperienceInPlaceOfEducation;
+  dynamic get jobExperienceInPlaceOfEducation => _jobExperienceInPlaceOfEducation;
 
   dynamic get jobMinSalary => _jobMinSalary;
 
@@ -330,15 +330,15 @@ class JobDataModel {
 
   dynamic get jobJobTitle => _jobJobTitle;
 
-  String? get jobPostingLanguage => _jobPostingLanguage;
+  dynamic get jobPostingLanguage => _jobPostingLanguage;
 
-  String? get jobOnetSoc => _jobOnetSoc;
+  dynamic get jobOnetSoc => _jobOnetSoc;
 
-  String? get jobOnetJobZone => _jobOnetJobZone;
+  dynamic get jobOnetJobZone => _jobOnetJobZone;
 
-  String? get jobNaicsCode => _jobNaicsCode;
+  dynamic get jobNaicsCode => _jobNaicsCode;
 
-  String? get jobNaicsName => _jobNaicsName;
+  dynamic get jobNaicsName => _jobNaicsName;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

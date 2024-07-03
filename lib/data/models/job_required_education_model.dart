@@ -1,13 +1,13 @@
 class JobRequiredEducationModel {
   JobRequiredEducationModel({
-    bool? postgraduateDegree,
-    bool? professionalCertification,
-    bool? highSchool,
-    bool? associatesDegree,
-    bool? bachelorsDegree,
-    bool? degreeMentioned,
-    bool? degreePreferred,
-    bool? professionalCertificationMentioned,
+    dynamic postgraduateDegree,
+    dynamic professionalCertification,
+    dynamic highSchool,
+    dynamic associatesDegree,
+    dynamic bachelorsDegree,
+    dynamic degreeMentioned,
+    dynamic degreePreferred,
+    dynamic professionalCertificationMentioned,
   }) {
     _postgraduateDegree = postgraduateDegree;
     _professionalCertification = professionalCertification;
@@ -31,24 +31,24 @@ class JobRequiredEducationModel {
         json['professional_certification_mentioned'];
   }
 
-  bool? _postgraduateDegree;
-  bool? _professionalCertification;
-  bool? _highSchool;
-  bool? _associatesDegree;
-  bool? _bachelorsDegree;
-  bool? _degreeMentioned;
-  bool? _degreePreferred;
-  bool? _professionalCertificationMentioned;
+  dynamic _postgraduateDegree;
+  dynamic _professionalCertification;
+  dynamic _highSchool;
+  dynamic _associatesDegree;
+  dynamic _bachelorsDegree;
+  dynamic _degreeMentioned;
+  dynamic _degreePreferred;
+  dynamic _professionalCertificationMentioned;
 
   JobRequiredEducationModel copyWith({
-    bool? postgraduateDegree,
-    bool? professionalCertification,
-    bool? highSchool,
-    bool? associatesDegree,
-    bool? bachelorsDegree,
-    bool? degreeMentioned,
-    bool? degreePreferred,
-    bool? professionalCertificationMentioned,
+    dynamic postgraduateDegree,
+    dynamic professionalCertification,
+    dynamic highSchool,
+    dynamic associatesDegree,
+    dynamic bachelorsDegree,
+    dynamic degreeMentioned,
+    dynamic degreePreferred,
+    dynamic professionalCertificationMentioned,
   }) =>
       JobRequiredEducationModel(
         postgraduateDegree: postgraduateDegree ?? _postgraduateDegree,
@@ -64,21 +64,21 @@ class JobRequiredEducationModel {
                 _professionalCertificationMentioned,
       );
 
-  bool? get postgraduateDegree => _postgraduateDegree;
+  dynamic get postgraduateDegree => _postgraduateDegree;
 
-  bool? get professionalCertification => _professionalCertification;
+  dynamic get professionalCertification => _professionalCertification;
 
-  bool? get highSchool => _highSchool;
+  dynamic get highSchool => _highSchool;
 
-  bool? get associatesDegree => _associatesDegree;
+  dynamic get associatesDegree => _associatesDegree;
 
-  bool? get bachelorsDegree => _bachelorsDegree;
+  dynamic get bachelorsDegree => _bachelorsDegree;
 
-  bool? get degreeMentioned => _degreeMentioned;
+  dynamic get degreeMentioned => _degreeMentioned;
 
-  bool? get degreePreferred => _degreePreferred;
+  dynamic get degreePreferred => _degreePreferred;
 
-  bool? get professionalCertificationMentioned =>
+  dynamic get professionalCertificationMentioned =>
       _professionalCertificationMentioned;
 
   Map<String, dynamic> toJson() {

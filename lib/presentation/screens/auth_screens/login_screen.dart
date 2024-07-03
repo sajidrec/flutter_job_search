@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -147,8 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   backgroundColor: Colors.green,
                   textColor: AppColors.textWhite,
                 );
-                if (mounted) {
-
+                if (context.mounted) {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(

@@ -137,7 +137,8 @@ class JobDetailsScreen extends StatelessWidget {
               ? "N/A"
               : DateFormat('dd-MM-yyyy - kk:mm a').format(
                   DateTime.parse(
-                      jobDetails.jobOfferExpirationDatetimeUtc ?? ""),
+                    jobDetails.jobOfferExpirationDatetimeUtc ?? "",
+                  ),
                 ),
         ),
       ],

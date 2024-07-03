@@ -124,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   textColor: Colors.white,
                   toastLength: Toast.LENGTH_LONG,
                 );
-                if (mounted) {
+                if (context.mounted) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
