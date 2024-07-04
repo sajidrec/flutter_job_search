@@ -233,9 +233,9 @@ class JobDetailsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 child: CachedNetworkImage(
                   imageUrl: imageUrl,
-                  fit: BoxFit.cover,
-                  height: 80,
-                  width: 80,
+                  fit: BoxFit.fill,
+                  height: 90,
+                  width: 90,
                   errorWidget: (context, url, error) => const Icon(
                     Icons.broken_image_rounded,
                     size: 50,
