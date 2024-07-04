@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:job_search/data/models/job_data_model.dart';
-import 'package:job_search/presentation/providers/job_list_provider.dart';
+import 'package:job_search/presentation/providers/popular_job_list_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/screens/all_popular_job_list_screen.dart';
 import 'package:job_search/presentation/screens/job_details_screen.dart';
+import 'package:job_search/presentation/screens/job_list_screen.dart';
 import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/widgets/job_card_widget.dart';
@@ -28,7 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        Provider.of<JobListProvider>(context, listen: false).requestJobList(
+        Provider.of<PopularJobListProvider>(context, listen: false)
+            .requestJobList(
           keyword: "Popular",
         );
       },
@@ -112,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         const SizedBox(height: 14),
-        Consumer<JobListProvider>(
+        Consumer<PopularJobListProvider>(
           builder: (context, popularJobProvider, child) {
             return popularJobProvider.inProgress
                 ? const Center(
@@ -227,7 +229,16 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: InputDecoration(
               hintText: "Search",
               suffixIcon: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => JobListScreen(
+                        searchKeyword: _searchTEController.text.trim(),
+                      ),
+                    ),
+                  );
+                },
                 icon: const Icon(
                   Icons.search,
                   color: AppColors.textWhite,

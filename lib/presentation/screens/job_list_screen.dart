@@ -1,16 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:job_search/data/models/job_data_model.dart';
-import 'package:job_search/presentation/providers/popular_job_list_provider.dart';
+import 'package:job_search/presentation/providers/job_list_provider.dart';
 import 'package:job_search/presentation/screens/job_details_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:job_search/presentation/widgets/job_card_widget.dart';
 import 'package:provider/provider.dart';
 
-class AllPopularJobListScreen extends StatelessWidget {
-  const AllPopularJobListScreen({
+class JobListScreen extends StatefulWidget {
+  final String searchKeyword;
+
+  const JobListScreen({
     super.key,
+    required this.searchKeyword,
   });
+
+  @override
+  State<JobListScreen> createState() => _JobListScreenState();
+}
+
+class _JobListScreenState extends State<JobListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        Provider.of<JobListProvider>(
+          context,
+          listen: false,
+        ).requestJobList(
+          keyword: widget.searchKeyword,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +50,13 @@ class AllPopularJobListScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      "Popular Job Posts",
+                      "${widget.searchKeyword} Job Posts",
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                   ],
                 ),
                 const SizedBox(height: 14),
-                buildPopularJobList(),
+                buildJobList(),
                 const SizedBox(
                   height: 20,
                 ),
@@ -45,10 +68,10 @@ class AllPopularJobListScreen extends StatelessWidget {
     );
   }
 
-  Consumer<PopularJobListProvider> buildPopularJobList() {
-    return Consumer<PopularJobListProvider>(
-      builder: (context, popularJobProvider, child) {
-        return popularJobProvider.inProgress
+  Consumer<JobListProvider> buildJobList() {
+    return Consumer<JobListProvider>(
+      builder: (context, jobListProvider, child) {
+        return jobListProvider.inProgress
             ? const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.secondary,
@@ -60,16 +83,13 @@ class AllPopularJobListScreen extends StatelessWidget {
                 itemBuilder: (context, index) => JobCardWidget(
                   context: context,
                   imageUrl:
-                      popularJobProvider.jobList.data?[index].employerLogo ??
-                          "",
-                  jobTitle:
-                      popularJobProvider.jobList.data?[index].jobTitle ?? "",
+                      jobListProvider.jobList.data?[index].employerLogo ?? "",
+                  jobTitle: jobListProvider.jobList.data?[index].jobTitle ?? "",
                   companyName:
-                      popularJobProvider.jobList.data?[index].jobPublisher ??
-                          "",
+                      jobListProvider.jobList.data?[index].jobPublisher ?? "",
                   datePosted: DateFormat('dd-MM-yyyy - kk:mm a').format(
                     DateTime.parse(
-                      popularJobProvider
+                      jobListProvider
                               .jobList.data?[index].jobPostedAtDatetimeUtc ??
                           DateTime.now().toString(),
                     ).toLocal(),
@@ -79,7 +99,7 @@ class AllPopularJobListScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => JobDetailsScreen(
-                          jobDetails: popularJobProvider.jobList.data?[index] ??
+                          jobDetails: jobListProvider.jobList.data?[index] ??
                               JobDataModel(),
                         ),
                       ),
@@ -89,7 +109,7 @@ class AllPopularJobListScreen extends StatelessWidget {
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 10,
                 ),
-                itemCount: popularJobProvider.jobList.data?.length ?? 0,
+                itemCount: jobListProvider.jobList.data?.length ?? 0,
               );
       },
     );
