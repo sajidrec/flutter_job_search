@@ -43,6 +43,139 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  List<ElevatedButton> _getJobCategoryList() => [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const JobListScreen(searchKeyword: "Mobile App Developer"),
+              ),
+            );
+          },
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(
+              AppColors.primaryShade,
+            ),
+            foregroundColor: WidgetStateProperty.all(
+              AppColors.textWhite,
+            ),
+            overlayColor: WidgetStateProperty.all(
+              AppColors.primary.withOpacity(0.2),
+            ),
+          ),
+          child: const Text(
+            "Mobile App Developer",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const JobListScreen(searchKeyword: "Web Developer"),
+              ),
+            );
+          },
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(
+              AppColors.primaryShade,
+            ),
+            foregroundColor: WidgetStateProperty.all(
+              AppColors.textWhite,
+            ),
+            overlayColor: WidgetStateProperty.all(
+              AppColors.primary.withOpacity(0.2),
+            ),
+          ),
+          child: const Text(
+            "Web Developer",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const JobListScreen(searchKeyword: "Graphics Designer"),
+              ),
+            );
+          },
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(
+              AppColors.primaryShade,
+            ),
+            foregroundColor: WidgetStateProperty.all(
+              AppColors.textWhite,
+            ),
+            overlayColor: WidgetStateProperty.all(
+              AppColors.primary.withOpacity(0.2),
+            ),
+          ),
+          child: const Text(
+            "Graphics Designer",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const JobListScreen(searchKeyword: "Data Entry"),
+              ),
+            );
+          },
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(
+              AppColors.primaryShade,
+            ),
+            foregroundColor: WidgetStateProperty.all(
+              AppColors.textWhite,
+            ),
+            overlayColor: WidgetStateProperty.all(
+              AppColors.primary.withOpacity(0.2),
+            ),
+          ),
+          child: const Text(
+            "Data Entry",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    const JobListScreen(searchKeyword: "Cyber Security"),
+              ),
+            );
+          },
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(
+              AppColors.primaryShade,
+            ),
+            foregroundColor: WidgetStateProperty.all(
+              AppColors.textWhite,
+            ),
+            overlayColor: WidgetStateProperty.all(
+              AppColors.primary.withOpacity(0.2),
+            ),
+          ),
+          child: const Text(
+            "Cyber Security",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+      ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,26 +318,9 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 45,
             child: ListView.separated(
               shrinkWrap: true,
-              itemCount: 10,
+              itemCount: _getJobCategoryList().length,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(
-                    AppColors.primaryShade,
-                  ),
-                  foregroundColor: WidgetStateProperty.all(
-                    AppColors.textWhite,
-                  ),
-                  overlayColor: WidgetStateProperty.all(
-                    AppColors.primary.withOpacity(0.2),
-                  ),
-                ),
-                child: const Text(
-                  "Design",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
+              itemBuilder: (context, index) => _getJobCategoryList()[index],
               separatorBuilder: (BuildContext context, int index) =>
                   const SizedBox(
                 width: 8,

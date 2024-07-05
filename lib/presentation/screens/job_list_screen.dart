@@ -49,9 +49,14 @@ class _JobListScreenState extends State<JobListScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      "${widget.searchKeyword} Job Posts",
-                      style: Theme.of(context).textTheme.headlineMedium,
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.90,
+                      child: Text(
+                        "${widget.searchKeyword} Job Posts",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
                     ),
                   ],
                 ),
