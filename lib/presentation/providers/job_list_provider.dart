@@ -15,6 +15,8 @@ class JobListProvider extends ChangeNotifier {
 
   Future<void> requestJobList({
     required String keyword,
+    String datePosted = "all",
+    bool remoteOnly = false,
   }) async {
     _inProgress = true;
     notifyListeners();
@@ -23,6 +25,8 @@ class JobListProvider extends ChangeNotifier {
       final response = await Dio().get(
         Urls.getSearchUrl(
           keyword: keyword,
+          remoteOnly: remoteOnly ? "true" : "false",
+          datePosted: datePosted,
         ),
         options: Options(
           headers: SecretInfo.getHeader(),

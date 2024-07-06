@@ -3,7 +3,7 @@ class Urls {
 
   static String getSearchUrl({
     required String keyword,
-    String datePosted = "3days",
+    String datePosted = "all",
     String remoteOnly = "false",
     int pageNumber = 1,
     int numPages = 1,

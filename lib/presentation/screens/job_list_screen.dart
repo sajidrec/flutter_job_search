@@ -9,10 +9,14 @@ import 'package:provider/provider.dart';
 
 class JobListScreen extends StatefulWidget {
   final String searchKeyword;
+  final String datePosted;
+  final bool remoteOnly;
 
   const JobListScreen({
     super.key,
     required this.searchKeyword,
+    this.datePosted = "all",
+    this.remoteOnly = false,
   });
 
   @override
@@ -30,6 +34,8 @@ class _JobListScreenState extends State<JobListScreen> {
           listen: false,
         ).requestJobList(
           keyword: widget.searchKeyword,
+          datePosted: widget.datePosted,
+          remoteOnly: widget.remoteOnly,
         );
       },
     );

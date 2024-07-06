@@ -341,30 +341,40 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextFormField(
-            textInputAction: TextInputAction.search,
-            controller: _searchTEController,
-            decoration: InputDecoration(
-              hintText: "Search",
-              suffixIcon: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => JobListScreen(
-                        searchKeyword: _searchTEController.text.trim(),
+          Consumer<RemoteOnlyDropdownProvider>(
+              builder: (context, remoteOnlyDropdownProvider, child) {
+            return Consumer<JobPostDateDropdownProvider>(
+              builder: (context,jobPostDateProvider,child) {
+                return TextFormField(
+                  textInputAction: TextInputAction.search,
+                  controller: _searchTEController,
+                  decoration: InputDecoration(
+                    hintText: "Search",
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => JobListScreen(
+                              searchKeyword: _searchTEController.text.trim(),
+                              remoteOnly:
+                                  remoteOnlyDropdownProvider.getRemoteOnlyStatus,
+                              datePosted: jobPostDateProvider.getJobPostedDateRange,
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(
+                        Icons.search,
+                        color: AppColors.textWhite,
                       ),
                     ),
-                  );
-                },
-                icon: const Icon(
-                  Icons.search,
-                  color: AppColors.textWhite,
-                ),
-              ),
-            ),
-            onFieldSubmitted: (value) {},
-          ),
+                  ),
+                  onFieldSubmitted: (value) {},
+                );
+              }
+            );
+          }),
           const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
