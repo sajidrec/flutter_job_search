@@ -344,36 +344,36 @@ class _HomeScreenState extends State<HomeScreen> {
           Consumer<RemoteOnlyDropdownProvider>(
               builder: (context, remoteOnlyDropdownProvider, child) {
             return Consumer<JobPostDateDropdownProvider>(
-              builder: (context,jobPostDateProvider,child) {
-                return TextFormField(
-                  textInputAction: TextInputAction.search,
-                  controller: _searchTEController,
-                  decoration: InputDecoration(
-                    hintText: "Search",
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => JobListScreen(
-                              searchKeyword: _searchTEController.text.trim(),
-                              remoteOnly:
-                                  remoteOnlyDropdownProvider.getRemoteOnlyStatus,
-                              datePosted: jobPostDateProvider.getJobPostedDateRange,
-                            ),
+                builder: (context, jobPostDateProvider, child) {
+              return TextFormField(
+                textInputAction: TextInputAction.search,
+                controller: _searchTEController,
+                decoration: InputDecoration(
+                  hintText: "Search",
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JobListScreen(
+                            searchKeyword: _searchTEController.text.trim(),
+                            remoteOnly:
+                                remoteOnlyDropdownProvider.getRemoteOnlyStatus,
+                            datePosted:
+                                jobPostDateProvider.getJobPostedDateRange,
                           ),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.search,
-                        color: AppColors.textWhite,
-                      ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(
+                      Icons.search,
+                      color: AppColors.textWhite,
                     ),
                   ),
-                  onFieldSubmitted: (value) {},
-                );
-              }
-            );
+                ),
+                onFieldSubmitted: (value) {},
+              );
+            });
           }),
           const SizedBox(height: 5),
           Row(
@@ -538,10 +538,20 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Row(
             children: [
-              const CircleAvatar(
-                backgroundColor: AppColors.secondary,
-                minRadius: 40,
-              ),
+              Consumer<UserCredentialProvider>(builder: (context, user, child) {
+                return CircleAvatar(
+                  backgroundColor: AppColors.secondary,
+                  minRadius: 40,
+                  child: Text(
+                    user.userInfo.name?[0] ?? "",
+                    style: const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textWhite,
+                    ),
+                  ),
+                );
+              }),
               const SizedBox(width: 10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
