@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:job_search/data/models/job_data_model.dart';
+import 'package:job_search/presentation/providers/job_post_date_dropdown_provider.dart';
 import 'package:job_search/presentation/providers/popular_job_list_provider.dart';
 import 'package:job_search/presentation/providers/remote_only_dropdown_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
@@ -378,35 +379,84 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildJobPostTimeDropdown() {
-    return DropdownButton<String>(
-      dropdownColor: AppColors.primaryShade,
-      borderRadius: BorderRadius.circular(12),
-      iconEnabledColor: AppColors.textWhite,
-      value: "all",
-      items: const [
-        DropdownMenuItem(
-          value: "all",
-          child: Text("All"),
-        ),
-        DropdownMenuItem(
-          value: "today",
-          child: Text("Today"),
-        ),
-        DropdownMenuItem(
-          value: "3days",
-          child: Text("3 Days"),
-        ),
-        DropdownMenuItem(
-          value: "week",
-          child: Text("Week"),
-        ),
-        DropdownMenuItem(
-          value: "month",
-          child: Text("Month"),
-        ),
-      ],
-      onChanged: (value) {},
-    );
+    return Consumer<JobPostDateDropdownProvider>(
+        builder: (context, jobPostDateDropdownProvider, child) {
+      return DropdownButton<String>(
+        dropdownColor: AppColors.primaryShade,
+        borderRadius: BorderRadius.circular(12),
+        iconEnabledColor: AppColors.textWhite,
+        value: jobPostDateDropdownProvider.getJobPostedDateRange,
+        items: [
+          DropdownMenuItem(
+            value: "all",
+            child: (jobPostDateDropdownProvider.getJobPostedDateRange == "all")
+                ? const Text("All")
+                : InkWell(
+                    onTap: () {
+                      jobPostDateDropdownProvider.setJobPostedDateRange = "all";
+                      Navigator.pop(context);
+                    },
+                    child: const Text("All")),
+          ),
+          DropdownMenuItem(
+            value: "today",
+            child:
+                (jobPostDateDropdownProvider.getJobPostedDateRange == "today")
+                    ? const Text("Today")
+                    : InkWell(
+                        onTap: () {
+                          jobPostDateDropdownProvider.setJobPostedDateRange =
+                              "today";
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Today"),
+                      ),
+          ),
+          DropdownMenuItem(
+            value: "3days",
+            child:
+                (jobPostDateDropdownProvider.getJobPostedDateRange == "3days")
+                    ? const Text("3 Days")
+                    : InkWell(
+                        onTap: () {
+                          jobPostDateDropdownProvider.setJobPostedDateRange =
+                              "3days";
+                          Navigator.pop(context);
+                        },
+                        child: const Text("3 Days"),
+                      ),
+          ),
+          DropdownMenuItem(
+            value: "week",
+            child: (jobPostDateDropdownProvider.getJobPostedDateRange == "week")
+                ? const Text("Week")
+                : InkWell(
+                    onTap: () {
+                      jobPostDateDropdownProvider.setJobPostedDateRange =
+                          "week";
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Week"),
+                  ),
+          ),
+          DropdownMenuItem(
+            value: "month",
+            child:
+                (jobPostDateDropdownProvider.getJobPostedDateRange == "month")
+                    ? const Text("Month")
+                    : InkWell(
+                        onTap: () {
+                          jobPostDateDropdownProvider.setJobPostedDateRange =
+                              "month";
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Month"),
+                      ),
+          ),
+        ],
+        onChanged: (value) {},
+      );
+    });
   }
 
   Widget _buildRemoteOnlyDropdown() {
