@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:job_search/data/models/job_data_model.dart';
 import 'package:job_search/presentation/providers/popular_job_list_provider.dart';
+import 'package:job_search/presentation/providers/remote_only_dropdown_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/screens/all_popular_job_list_screen.dart';
 import 'package:job_search/presentation/screens/job_details_screen.dart';
@@ -409,33 +410,52 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildRemoteOnlyDropdown() {
-    return DropdownButton<bool>(
-      dropdownColor: AppColors.primaryShade,
-      iconEnabledColor: AppColors.textWhite,
-      icon: const Icon(Icons.arrow_drop_down_outlined),
-      hint: const Text(
-        "Job Type",
-        style: TextStyle(
-          color: AppColors.textWhite,
-        ),
-      ),
-      borderRadius: BorderRadius.circular(12),
-      value: false,
-      items: const [
-        DropdownMenuItem<bool>(
-          value: true,
-          child: Text(
-            "Remote Only",
-            style: TextStyle(),
+    return Consumer<RemoteOnlyDropdownProvider>(
+        builder: (context, remoteOnlyDropdownProvider, child) {
+      return DropdownButton<bool>(
+        dropdownColor: AppColors.primaryShade,
+        iconEnabledColor: AppColors.textWhite,
+        icon: const Icon(Icons.arrow_drop_down_outlined),
+        hint: const Text(
+          "Job Type",
+          style: TextStyle(
+            color: AppColors.textWhite,
           ),
         ),
-        DropdownMenuItem(
-          value: false,
-          child: Text("Any Type"),
-        ),
-      ],
-      onChanged: (value) {},
-    );
+        borderRadius: BorderRadius.circular(12),
+        value: remoteOnlyDropdownProvider.getRemoteOnlyStatus,
+        items: [
+          DropdownMenuItem<bool>(
+            value: true,
+            child: (remoteOnlyDropdownProvider.getRemoteOnlyStatus)
+                ? const Text("Remote Only")
+                : InkWell(
+                    onTap: () {
+                      remoteOnlyDropdownProvider.setRemoteOnlyStatus = true;
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Remote Only",
+                      style: TextStyle(),
+                    ),
+                  ),
+          ),
+          DropdownMenuItem(
+            value: false,
+            child: (!remoteOnlyDropdownProvider.getRemoteOnlyStatus)
+                ? const Text("Any Type")
+                : InkWell(
+                    onTap: () {
+                      remoteOnlyDropdownProvider.setRemoteOnlyStatus = false;
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Any Type"),
+                  ),
+          ),
+        ],
+        onChanged: (value) {},
+      );
+    });
   }
 
   Widget _buildHeaderSection(BuildContext context) {

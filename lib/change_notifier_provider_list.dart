@@ -1,6 +1,7 @@
 import 'package:job_search/presentation/providers/auth_providers/forget_password_provider.dart';
 import 'package:job_search/presentation/providers/auth_providers/logout_provider.dart';
 import 'package:job_search/presentation/providers/job_list_provider.dart';
+import 'package:job_search/presentation/providers/remote_only_dropdown_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +39,9 @@ class ChangeNotifierProviderList {
         ),
         ChangeNotifierProvider(
           create: (context) => JobListProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RemoteOnlyDropdownProvider(),
         ),
       ];
 }
