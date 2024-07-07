@@ -1,4 +1,6 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
@@ -99,11 +101,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   Widget _buildImagePicker() {
     return Column(
       children: [
-        const Text(
-          "anything that suite.jpg",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
         const SizedBox(height: 12),
         Container(
           decoration: BoxDecoration(
@@ -112,7 +109,21 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           ),
           child: InkWell(
             borderRadius: BorderRadius.circular(10),
-            onTap: () {},
+            onTap: () async {
+              FilePickerResult? result = await FilePicker.platform.pickFiles(
+                type: FileType.image,
+              );
+              if (result != null) {
+                final String? pickedImageName =
+                    result.paths.first?.split("/").last;
+              } else {
+                Fluttertoast.showToast(
+                  msg: "Nothing selected",
+                  backgroundColor: Colors.red,
+                  textColor: AppColors.textWhite,
+                );
+              }
+            },
             child: Row(
               children: [
                 Expanded(
