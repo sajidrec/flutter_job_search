@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/screens/auth_screens/signup_or_login_screen.dart';
 import 'package:job_search/presentation/screens/main_bottom_nav_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
-import 'package:job_search/presentation/utils/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../widgets/center_circular_progress_indicator.dart';
@@ -25,9 +25,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _moveToNextScreen() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    if (sharedPreferences.getBool(Constants.userLoggedInKey) ?? false) {
+    if (Provider.of<UserCredentialProvider>(
+          context,
+          listen: false,
+        ).getUserInfo() !=
+        null) {
       Timer(
         const Duration(seconds: 3),
         () {

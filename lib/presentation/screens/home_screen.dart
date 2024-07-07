@@ -37,12 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
     );
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        Provider.of<UserCredentialProvider>(context, listen: false)
-            .requestUserInfo();
-      },
-    );
   }
 
   List<ElevatedButton> _getJobCategoryList() => [
@@ -543,7 +537,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   backgroundColor: AppColors.secondary,
                   minRadius: 40,
                   child: Text(
-                    user.userInfo.name?[0] ?? "",
+                    user.getUserInfo()?.displayName?[0] ?? "",
                     style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w600,
@@ -566,7 +560,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (context, user, child) {
                     // user.requestUserInfo();
                     return Text(
-                      user.userInfo.name ?? "Unknown",
+                      user.getUserInfo()?.displayName ?? "Unknown",
                       style: Theme.of(context).textTheme.bodyLarge,
                     );
                   }),

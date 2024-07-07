@@ -17,12 +17,6 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        Provider.of<UserCredentialProvider>(context, listen: false)
-            .requestUserInfo();
-      },
-    );
   }
 
   @override
@@ -99,9 +93,9 @@ class _SettingScreenState extends State<SettingScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Consumer<UserCredentialProvider>(
-                    builder: (context, userCredentialProvider, child) {
+                    builder: (context, user, child) {
                   return Text(
-                    userCredentialProvider.userInfo.name ?? "Unknown",
+                    user.getUserInfo()?.displayName ?? "Unknown",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headlineSmall,

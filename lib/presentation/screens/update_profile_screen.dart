@@ -29,8 +29,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        Provider.of<UserCredentialProvider>(context, listen: false)
-            .requestUserInfo();
         Provider.of<ImagePickerProvider>(context, listen: false)
             .clearPreviousState();
       },
@@ -68,10 +66,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           const SizedBox(height: 10),
           _buildImagePicker(),
           const SizedBox(height: 16),
-          Consumer<UserCredentialProvider>(
-              builder: (context, userCredentialProvider, child) {
+          Consumer<UserCredentialProvider>(builder: (context, user, child) {
             _fullNameTEController.text =
-                userCredentialProvider.userInfo.name ?? "Unknown";
+                user.getUserInfo()?.displayName ?? "Unknown";
             return TextFormField(
               maxLength: 35,
               maxLines: 1,
