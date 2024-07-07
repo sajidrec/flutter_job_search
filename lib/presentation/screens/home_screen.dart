@@ -521,9 +521,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const UpdateProfileScreen(
-              fullName: "MD. Sajid Hossain",
-            ),
+            builder: (context) => const UpdateProfileScreen(),
           ),
         );
       },

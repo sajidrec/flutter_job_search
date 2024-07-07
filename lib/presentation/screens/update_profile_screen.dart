@@ -8,11 +8,9 @@ import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
-  final String fullName;
-
   const UpdateProfileScreen({
     super.key,
-    required this.fullName,
+    // required this.fullName,
   });
 
   @override
