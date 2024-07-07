@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:job_search/presentation/providers/image_picker_provider.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
@@ -30,6 +31,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       (timeStamp) {
         Provider.of<UserCredentialProvider>(context, listen: false)
             .requestUserInfo();
+        Provider.of<ImagePickerProvider>(context, listen: false)
+            .clearPreviousState();
       },
     );
   }
@@ -53,6 +56,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       key: _formKey,
       child: Column(
         children: [
+          const SizedBox(height: 12),
+          Consumer<ImagePickerProvider>(
+              builder: (context, imagePickerProvider, child) {
+            return Text(
+              imagePickerProvider.getPickedImageName,
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
+            );
+          }),
           const SizedBox(height: 10),
           _buildImagePicker(),
           const SizedBox(height: 16),
@@ -107,54 +119,53 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             color: AppColors.textWhite,
             borderRadius: BorderRadius.circular(10),
           ),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(10),
-            onTap: () async {
-              FilePickerResult? result = await FilePicker.platform.pickFiles(
-                type: FileType.image,
-              );
-              if (result != null) {
-                final String? pickedImageName =
-                    result.paths.first?.split("/").last;
-              } else {
-                Fluttertoast.showToast(
-                  msg: "Nothing selected",
-                  backgroundColor: Colors.red,
-                  textColor: AppColors.textWhite,
-                );
-              }
-            },
-            child: Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
+          child: Consumer<ImagePickerProvider>(
+              builder: (context, imagePickerProvider, child) {
+            return InkWell(
+              borderRadius: BorderRadius.circular(10),
+              onTap: () async {
+                FilePickerResult? pickedImage =
+                    await imagePickerProvider.pickImage();
+                if (pickedImage == null) {
+                  Fluttertoast.showToast(
+                    msg: "Nothing selected",
+                    backgroundColor: Colors.red,
+                    textColor: AppColors.textWhite,
+                  );
+                }
+              },
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        ),
+                        color: Colors.black87,
                       ),
-                      color: Colors.black87,
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(12),
-                      child: Text(
-                        "Select Image",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                      child: const Padding(
+                        padding: EdgeInsets.all(12),
+                        child: Text(
+                          "Select Image",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                const Expanded(
-                  flex: 3,
-                  child: SizedBox.shrink(),
-                ),
-              ],
-            ),
-          ),
+                  const Expanded(
+                    flex: 3,
+                    child: SizedBox.shrink(),
+                  ),
+                ],
+              ),
+            );
+          }),
         ),
       ],
     );
