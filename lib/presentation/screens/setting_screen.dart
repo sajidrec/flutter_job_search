@@ -95,6 +95,8 @@ class _SettingScreenState extends State<SettingScreen> {
                               userCredentialProvider.getUserInfo()!.photoURL ??
                                   "",
                           fit: BoxFit.cover,
+                          height: double.maxFinite,
+                          width: double.maxFinite,
                         ),
                       )
                     : Text(

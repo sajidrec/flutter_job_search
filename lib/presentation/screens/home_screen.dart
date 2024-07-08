@@ -540,6 +540,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? ClipOval(
                           child: CachedNetworkImage(
                             imageUrl: user.getUserInfo()!.photoURL ?? "",
+                            height: double.maxFinite,
+                            width: double.maxFinite,
                             fit: BoxFit.cover,
                           ),
                         )
