@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:job_search/presentation/providers/image_picker_provider.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
+import 'package:job_search/presentation/providers/profile_update_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -78,27 +81,51 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           const SizedBox(height: 30),
           SizedBox(
             width: double.maxFinite,
-            child: FilledButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all(
-                  AppColors.secondary,
-                ),
-                foregroundColor: WidgetStateProperty.all(
-                  AppColors.textWhite,
-                ),
-                padding: WidgetStateProperty.all(
-                  const EdgeInsets.all(14),
-                ),
-              ),
-              child: const Text(
-                "Update",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
+            child: Consumer<ImagePickerProvider>(
+                builder: (context, imagePickerProvider, child) {
+              return Consumer<ProfileUpdateProvider>(
+                  builder: (context, profileUpdateProvider, child) {
+                return FilledButton(
+                  onPressed: () async {
+                    File file =
+                        File(imagePickerProvider.pickedImage!.paths[0] ?? "");
+                    bool imageUploaded = await profileUpdateProvider
+                        .uploadImage(uploadFile: file);
+                    if (imageUploaded) {
+                      Fluttertoast.showToast(
+                        msg: "Image Upload Successful",
+                        backgroundColor: Colors.green,
+                        textColor: AppColors.textWhite,
+                      );
+                    } else {
+                      Fluttertoast.showToast(
+                        msg: "Image upload failed",
+                        backgroundColor: Colors.red,
+                        textColor: AppColors.textWhite,
+                      );
+                    }
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(
+                      AppColors.secondary,
+                    ),
+                    foregroundColor: WidgetStateProperty.all(
+                      AppColors.textWhite,
+                    ),
+                    padding: WidgetStateProperty.all(
+                      const EdgeInsets.all(14),
+                    ),
+                  ),
+                  child: const Text(
+                    "Update",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                );
+              });
+            }),
           ),
         ],
       ),
