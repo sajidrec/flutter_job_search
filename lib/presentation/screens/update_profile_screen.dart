@@ -7,6 +7,7 @@ import 'package:job_search/presentation/providers/image_picker_provider.dart';
 import 'package:job_search/presentation/providers/password_obscure_provider.dart';
 import 'package:job_search/presentation/providers/profile_update_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
+import 'package:job_search/presentation/screens/main_bottom_nav_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
@@ -74,6 +75,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               maxLength: 35,
               maxLines: 1,
               controller: _fullNameTEController,
+              validator: (value) {
+                if (value == null) {
+                  return "Name Can't be empty";
+                } else if (value.isEmpty) {
+                  return "Name Can't be empty";
+                }
+                return null;
+              },
             );
           }),
           const SizedBox(height: 16),
@@ -85,45 +94,72 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 builder: (context, imagePickerProvider, child) {
               return Consumer<ProfileUpdateProvider>(
                   builder: (context, profileUpdateProvider, child) {
-                return FilledButton(
-                  onPressed: () async {
-                    File file =
-                        File(imagePickerProvider.pickedImage!.paths[0] ?? "");
-                    bool imageUploaded = await profileUpdateProvider
-                        .uploadImage(uploadFile: file);
-                    if (imageUploaded) {
-                      Fluttertoast.showToast(
-                        msg: "Image Upload Successful",
-                        backgroundColor: Colors.green,
-                        textColor: AppColors.textWhite,
+                return profileUpdateProvider.getInProgressStatus
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.secondary,
+                        ),
+                      )
+                    : FilledButton(
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            if (imagePickerProvider.pickedImage != null) {
+                              File file = File(
+                                  imagePickerProvider.pickedImage!.paths[0] ??
+                                      "");
+                              bool imageUploaded = await profileUpdateProvider
+                                  .uploadImage(uploadFile: file);
+                              if (imageUploaded) {
+                                Fluttertoast.showToast(
+                                  msg: "Image Upload Successful",
+                                  backgroundColor: Colors.green,
+                                  textColor: AppColors.textWhite,
+                                );
+                              } else {
+                                Fluttertoast.showToast(
+                                  msg: "Image upload failed",
+                                  backgroundColor: Colors.red,
+                                  textColor: AppColors.textWhite,
+                                );
+                              }
+                            }
+
+                            await profileUpdateProvider.updateNameAndPassword(
+                              name: _fullNameTEController.text.trim(),
+                              password: _passwordTEController.text,
+                            );
+
+                            if (context.mounted) {
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      const MainBottomNavScreen(),
+                                ),
+                                (route) => false,
+                              );
+                            }
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            AppColors.secondary,
+                          ),
+                          foregroundColor: WidgetStateProperty.all(
+                            AppColors.textWhite,
+                          ),
+                          padding: WidgetStateProperty.all(
+                            const EdgeInsets.all(14),
+                          ),
+                        ),
+                        child: const Text(
+                          "Update",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       );
-                    } else {
-                      Fluttertoast.showToast(
-                        msg: "Image upload failed",
-                        backgroundColor: Colors.red,
-                        textColor: AppColors.textWhite,
-                      );
-                    }
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: WidgetStateProperty.all(
-                      AppColors.secondary,
-                    ),
-                    foregroundColor: WidgetStateProperty.all(
-                      AppColors.textWhite,
-                    ),
-                    padding: WidgetStateProperty.all(
-                      const EdgeInsets.all(14),
-                    ),
-                  ),
-                  child: const Text(
-                    "Update",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                );
               });
             }),
           ),
@@ -198,6 +234,17 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       return TextFormField(
         obscureText: value.isObscure,
         keyboardType: TextInputType.text,
+        controller: _passwordTEController,
+        validator: (value) {
+          if (value == null) {
+            return null;
+          } else if (value.isEmpty) {
+            return null;
+          } else if (value.length < 6) {
+            return "Password must be at least 6 character long";
+          }
+          return null;
+        },
         decoration: InputDecoration(
           suffixIcon: IconButton(
             onPressed: () {
