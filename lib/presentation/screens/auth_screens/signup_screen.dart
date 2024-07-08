@@ -143,7 +143,9 @@ class _SignupScreenState extends State<SignupScreen> {
             }
           },
           child: createAccountEmailAndPassProvider.getInProgressStatus
-              ? const CircularProgressIndicator()
+              ? const CircularProgressIndicator(
+                  color: AppColors.textWhite,
+                )
               : const Text(
                   "Sign Up",
                   style: TextStyle(fontSize: 20),

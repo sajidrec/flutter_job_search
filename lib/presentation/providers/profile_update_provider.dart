@@ -18,6 +18,9 @@ class ProfileUpdateProvider extends ChangeNotifier {
         .child("user_profile_pics/${firebaseauth.currentUser?.uid}");
     try {
       await testChild.putFile(uploadFile);
+      await firebaseauth.currentUser!.updatePhotoURL(
+        await testChild.getDownloadURL(),
+      );
       return true;
     } catch (e) {
       return false;

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:job_search/presentation/providers/auth_providers/logout_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
@@ -80,14 +81,29 @@ class _SettingScreenState extends State<SettingScreen> {
       children: [
         Column(
           children: [
-            CircleAvatar(
-              backgroundColor: AppColors.secondary,
-              minRadius: 50,
-              child: Text(
-                "?",
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-            ),
+            Consumer<UserCredentialProvider>(
+                builder: (context, userCredentialProvider, child) {
+              return CircleAvatar(
+                backgroundColor: AppColors.secondary,
+                minRadius: 60,
+                maxRadius: 65,
+                child: (userCredentialProvider.getUserInfo()?.photoURL ?? "")
+                        .isNotEmpty
+                    ? ClipOval(
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              userCredentialProvider.getUserInfo()!.photoURL ??
+                                  "",
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Text(
+                        userCredentialProvider.getUserInfo()?.displayName?[0] ??
+                            "",
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+              );
+            }),
             const SizedBox(height: 15),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,

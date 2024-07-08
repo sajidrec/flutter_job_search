@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:job_search/data/models/job_data_model.dart';
@@ -534,14 +535,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 return CircleAvatar(
                   backgroundColor: AppColors.secondary,
                   minRadius: 40,
-                  child: Text(
-                    user.getUserInfo()?.displayName?[0] ?? "",
-                    style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textWhite,
-                    ),
-                  ),
+                  maxRadius: 40,
+                  child: (user.getUserInfo()?.photoURL ?? "").isNotEmpty
+                      ? ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: user.getUserInfo()!.photoURL ?? "",
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : Text(
+                          user.getUserInfo()?.displayName?[0] ?? "",
+                          style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textWhite,
+                          ),
+                        ),
                 );
               }),
               const SizedBox(width: 10),
