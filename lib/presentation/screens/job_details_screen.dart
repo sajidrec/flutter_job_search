@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:job_search/data/models/job_data_model.dart';
+import 'package:job_search/presentation/providers/favourite_job_provider.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
+import 'package:provider/provider.dart';
 
 class JobDetailsScreen extends StatelessWidget {
   const JobDetailsScreen({
@@ -37,6 +39,7 @@ class JobDetailsScreen extends StatelessWidget {
                           jobTitle: jobDetails.jobTitle ?? "Unknown",
                           companyName: jobDetails.employerName ?? "Unknown",
                           website: jobDetails.employerWebsite ?? "",
+                          jobDetails: jobDetails,
                         ),
                         const SizedBox(height: 16),
                         _buildJobTypeDescription(
@@ -215,6 +218,7 @@ class JobDetailsScreen extends StatelessWidget {
     required String jobTitle,
     required String companyName,
     required String website,
+    required JobDataModel jobDetails,
   }) {
     return SizedBox(
       child: Row(
@@ -280,12 +284,17 @@ class JobDetailsScreen extends StatelessWidget {
               ),
             ],
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.favorite_outline_rounded,
-            ),
-          ),
+          Consumer<FavouriteJobProvider>(
+              builder: (context, favouriteJobProvider, child) {
+            return IconButton(
+              onPressed: () async {
+                favouriteJobProvider.addToFavourite(jobDetails: jobDetails);
+              },
+              icon: const Icon(
+                Icons.favorite_outline_rounded,
+              ),
+            );
+          }),
         ],
       ),
     );

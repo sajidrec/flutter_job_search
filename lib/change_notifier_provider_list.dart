@@ -1,5 +1,6 @@
 import 'package:job_search/presentation/providers/auth_providers/forget_password_provider.dart';
 import 'package:job_search/presentation/providers/auth_providers/logout_provider.dart';
+import 'package:job_search/presentation/providers/favourite_job_provider.dart';
 import 'package:job_search/presentation/providers/image_picker_provider.dart';
 import 'package:job_search/presentation/providers/job_list_provider.dart';
 import 'package:job_search/presentation/providers/job_post_date_dropdown_provider.dart';
@@ -54,6 +55,9 @@ class ChangeNotifierProviderList {
         ),
         ChangeNotifierProvider(
           create: (context) => ProfileUpdateProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FavouriteJobProvider(),
         ),
       ];
 }
