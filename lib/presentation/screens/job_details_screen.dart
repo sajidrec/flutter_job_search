@@ -173,9 +173,12 @@ class JobDetailsScreen extends StatelessWidget {
             ),
           ),
         ),
-        Text(
-          status,
-          style: Theme.of(context).textTheme.bodyMedium,
+        Padding(
+          padding: const EdgeInsets.only(left: 6, top: 2),
+          child: Text(
+            status,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
         ),
       ],
     );
