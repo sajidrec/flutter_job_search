@@ -5,6 +5,7 @@ import 'package:job_search/data/models/job_data_model.dart';
 import 'package:job_search/presentation/providers/favourite_job_provider.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobDetailsScreen extends StatelessWidget {
   const JobDetailsScreen({
@@ -202,7 +203,9 @@ class JobDetailsScreen extends StatelessWidget {
               AppColors.secondary.withOpacity(0.7),
             ),
           ),
-          onPressed: () {},
+          onPressed: () async {
+            await launchUrl(Uri.parse(jobDetails.jobApplyLink.toString()));
+          },
           child: const Text(
             "Apply Now",
             style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
