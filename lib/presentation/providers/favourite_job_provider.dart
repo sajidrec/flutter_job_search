@@ -37,7 +37,6 @@ class FavouriteJobProvider extends ChangeNotifier {
   }) async {
     FirebaseFirestore firebaseFireStore = FirebaseFirestore.instance;
     FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
     await firebaseFireStore
         .collection("allFavouriteJobList")
         .doc("user${firebaseAuth.currentUser?.uid ?? ""}")
@@ -69,11 +68,8 @@ class FavouriteJobProvider extends ChangeNotifier {
           JobDataModel jobDataModel = JobDataModel.fromJson(
             value.docs[i].data(),
           );
-          _favJobList.insert(
-            0,
-            jobDataModel,
-          );
-          _favJobIdList.insert(0, jobDataModel.jobId);
+          _favJobList.add(jobDataModel);
+          _favJobIdList.add(jobDataModel.jobId);
         }
         notifyListeners();
       },
