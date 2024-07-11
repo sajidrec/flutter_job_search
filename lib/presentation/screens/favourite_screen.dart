@@ -64,13 +64,18 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           itemBuilder: (context, index) => JobCardWidget(
                             context: context,
                             imageUrl: favouriteJobProvider
-                                .getFavJobList[index].employerLogo,
+                                    .getFavJobList[index].employerLogo ??
+                                "",
                             jobTitle: favouriteJobProvider
-                                .getFavJobList[index].jobTitle,
+                                    .getFavJobList[index].jobTitle ??
+                                "",
                             companyName: favouriteJobProvider
-                                .getFavJobList[index].employerName,
+                                    .getFavJobList[index].employerName ??
+                                "",
                             datePosted: favouriteJobProvider
-                                .getFavJobList[index].jobPostedAtDatetimeUtc,
+                                    .getFavJobList[index]
+                                    .jobPostedAtDatetimeUtc ??
+                                "",
                             onTapFunction: () {
                               Navigator.push(
                                 context,
