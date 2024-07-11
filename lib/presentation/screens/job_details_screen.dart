@@ -292,14 +292,26 @@ class JobDetailsScreen extends StatelessWidget {
           ),
           Consumer<FavouriteJobProvider>(
               builder: (context, favouriteJobProvider, child) {
-            return IconButton(
-              onPressed: () async {
-                favouriteJobProvider.addToFavourite(jobDetails: jobDetails);
-              },
-              icon: const Icon(
-                Icons.favorite_outline_rounded,
-              ),
-            );
+            return favouriteJobProvider.isFavourite(jobId: jobDetails.jobId)
+                ? IconButton(
+                    onPressed: () async {
+                      favouriteJobProvider.removeFromFavourite(
+                          jobDetails: jobDetails);
+                    },
+                    icon: const Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                    ),
+                  )
+                : IconButton(
+                    onPressed: () async {
+                      favouriteJobProvider.addToFavourite(
+                          jobDetails: jobDetails);
+                    },
+                    icon: const Icon(
+                      Icons.favorite_outline_rounded,
+                    ),
+                  );
           }),
         ],
       ),
