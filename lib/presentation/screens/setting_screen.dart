@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:job_search/presentation/providers/auth_providers/logout_provider.dart';
 import 'package:job_search/presentation/providers/user_credential_provider.dart';
 import 'package:job_search/presentation/screens/auth_screens/signup_or_login_screen.dart';
+import 'package:job_search/presentation/screens/main_bottom_nav_screen.dart';
 import 'package:job_search/presentation/screens/update_profile_screen.dart';
 import 'package:job_search/presentation/utils/app_colors.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/main_bottom_nav_screen_provider.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -23,18 +26,33 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                _buildHeaderEditSection(context),
-                const SizedBox(height: 12),
-                _buildLogoutButton(context: context),
-                const SizedBox(height: 30),
-              ],
+      body: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          Provider.of<MainBottomNavScreenProvider>(context, listen: false)
+              .setCurrentIndex = 0;
+
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MainBottomNavScreen(),
+            ),
+            (route) => false,
+          );
+        },
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  _buildHeaderEditSection(context),
+                  const SizedBox(height: 12),
+                  _buildLogoutButton(context: context),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
           ),
         ),
