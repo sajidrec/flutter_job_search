@@ -12,7 +12,7 @@
 
 ### Video of this app
 
-[Video link](https://drive.google.com/file/d/12p4oE1IuhT7GRmJcJjJBtQCKbCRpYlEj/view?usp=sharing)
+[Video link](https://drive.google.com/file/d/1upaa31_PraQv0WsozUvaHEzBN8gvcxs1/view?usp=drive_link)
 
 ### Screenshots
 
