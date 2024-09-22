@@ -16,6 +16,7 @@ class JobSearchApp extends StatelessWidget {
     return MultiProvider(
       providers: ChangeNotifierProviderList.getList(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: _buildThemeData(),
         home: const SplashScreen(),
       ),
