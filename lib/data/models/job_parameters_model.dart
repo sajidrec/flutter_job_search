@@ -1,6 +1,6 @@
 class JobParametersModel {
   JobParametersModel({
-    String? query,
+    dynamic query,
     num? page,
     num? numPages,
   }) {
@@ -15,12 +15,12 @@ class JobParametersModel {
     _numPages = json['num_pages'];
   }
 
-  String? _query;
+  dynamic _query;
   num? _page;
   num? _numPages;
 
   JobParametersModel copyWith({
-    String? query,
+    dynamic query,
     num? page,
     num? numPages,
   }) =>
@@ -30,7 +30,7 @@ class JobParametersModel {
         numPages: numPages ?? _numPages,
       );
 
-  String? get query => _query;
+  dynamic get query => _query;
 
   num? get page => _page;
 

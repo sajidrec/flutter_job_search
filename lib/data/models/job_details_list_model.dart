@@ -3,8 +3,8 @@ import 'package:job_search/data/models/job_parameters_model.dart';
 
 class JobDetailsListModel {
   JobDetailsListModel({
-    String? status,
-    String? requestId,
+    dynamic status,
+    dynamic requestId,
     JobParametersModel? parameters,
     List<JobDataModel>? data,
   }) {
@@ -28,14 +28,14 @@ class JobDetailsListModel {
     }
   }
 
-  String? _status;
-  String? _requestId;
+  dynamic _status;
+  dynamic _requestId;
   JobParametersModel? _parameters;
   List<JobDataModel>? _data;
 
   JobDetailsListModel copyWith({
-    String? status,
-    String? requestId,
+    dynamic status,
+    dynamic requestId,
     JobParametersModel? parameters,
     List<JobDataModel>? data,
   }) =>
@@ -46,9 +46,9 @@ class JobDetailsListModel {
         data: data ?? _data,
       );
 
-  String? get status => _status;
+  dynamic get status => _status;
 
-  String? get requestId => _requestId;
+  dynamic get requestId => _requestId;
 
   JobParametersModel? get parameters => _parameters;
 

@@ -29,6 +29,8 @@ class PopularJobListProvider extends ChangeNotifier {
         ),
       );
 
+      print("sajid testing ${response.data}");
+
       _jobList = JobDetailsListModel.fromJson(await response.data);
 
       _inProgress = false;

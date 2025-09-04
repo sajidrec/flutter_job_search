@@ -1,9 +1,9 @@
 class JobRequiredExperienceModel {
   JobRequiredExperienceModel({
-    String? noExperienceRequired,
+    dynamic noExperienceRequired,
     dynamic requiredExperienceInMonths,
-    String? experienceMentioned,
-    String? experiencePreferred,
+    dynamic experienceMentioned,
+    dynamic experiencePreferred,
   }) {
     _noExperienceRequired = noExperienceRequired;
     _requiredExperienceInMonths = requiredExperienceInMonths;
@@ -18,16 +18,16 @@ class JobRequiredExperienceModel {
     _experiencePreferred = json['experience_preferred'];
   }
 
-  String? _noExperienceRequired;
+  dynamic _noExperienceRequired;
   dynamic _requiredExperienceInMonths;
-  String? _experienceMentioned;
-  String? _experiencePreferred;
+  dynamic _experienceMentioned;
+  dynamic _experiencePreferred;
 
   JobRequiredExperienceModel copyWith({
-    String? noExperienceRequired,
+    dynamic noExperienceRequired,
     dynamic requiredExperienceInMonths,
-    String? experienceMentioned,
-    String? experiencePreferred,
+    dynamic experienceMentioned,
+    dynamic experiencePreferred,
   }) =>
       JobRequiredExperienceModel(
         noExperienceRequired: noExperienceRequired ?? _noExperienceRequired,
@@ -37,13 +37,13 @@ class JobRequiredExperienceModel {
         experiencePreferred: experiencePreferred ?? _experiencePreferred,
       );
 
-  String? get noExperienceRequired => _noExperienceRequired;
+  dynamic get noExperienceRequired => _noExperienceRequired;
 
   dynamic get requiredExperienceInMonths => _requiredExperienceInMonths;
 
-  String? get experienceMentioned => _experienceMentioned;
+  dynamic get experienceMentioned => _experienceMentioned;
 
-  String? get experiencePreferred => _experiencePreferred;
+  dynamic get experiencePreferred => _experiencePreferred;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

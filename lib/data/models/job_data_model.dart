@@ -202,7 +202,7 @@ class JobDataModel {
     JobRequiredExperienceModel? jobRequiredExperience,
     dynamic jobRequiredSkills,
     JobRequiredEducationModel? jobRequiredEducation,
-    bool? jobExperienceInPlaceOfEducation,
+    dynamic jobExperienceInPlaceOfEducation,
     dynamic jobMinSalary,
     dynamic jobMaxSalary,
     dynamic jobSalaryCurrency,

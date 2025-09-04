@@ -30,13 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        Provider.of<PopularJobListProvider>(context, listen: false)
-            .requestJobList(
-          keyword: "Popular",
-        );
-      },
+    _initSetup();
+  }
+
+  Future<void> _initSetup() async {
+    await Provider.of<PopularJobListProvider>(context, listen: false)
+        .requestJobList(
+      keyword: "Popular",
     );
   }
 
